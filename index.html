@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Немецкий язык DE/RU</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#0f172a;
+ color:#eef4ff;
+}
+.wrap{
+ max-width:900px;
+ margin:auto;
+ padding:16px;
+}
+.panel{
+ background:#111c34;
+ border:1px solid #2b3a63;
+ border-radius:18px;
+ padding:18px;
+ margin-bottom:16px;
+}
+h1{font-size:26px;margin:0 0 15px}
+button,input{
+ font-size:16px;
+ border:0;
+ border-radius:11px;
+ padding:11px 13px;
+}
+button{
+ background:#3b82f6;
+ color:white;
+ cursor:pointer;
+ margin:4px;
+}
+.green{background:#16a34a}
+.red{background:#dc2626}
+.orange{background:#f59e0b;color:#111}
+.gray{background:#475569}
+.row{
+ display:flex;
+ gap:7px;
+ flex-wrap:wrap;
+}
+.card{
+ background:#182544;
+ border:1px solid #33456f;
+ border-radius:17px;
+ padding:18px;
+ margin-top:14px;
+}
+.de{
+ font-size:25px;
+ font-weight:bold;
+ margin-bottom:10px;
+}
+.ru{
+ font-size:20px;
+ color:#cbd5e1;
+ margin-bottom:15px;
+}
+.stats{
+ margin:12px 0;
+ color:#cbd5e1;
+}
+input{
+ width:100%;
+ margin:5px 0;
+ background:#0b1325;
+ color:white;
+ border:1px solid #364a79;
+}
+.form{
+ margin-top:15px;
+ padding-top:15px;
+ border-top:1px solid #33456f;
+}
+.hidden{display:none}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<div class="panel">
+<h1>🇩🇪 Немецкий язык DE/RU</h1>
+
+<div class="row">
+<button onclick="showAdd()">➕ Добавить карточку</button>
+<button class="gray" onclick="resetCards()">♻️ Сброс до 1 карточки</button>
+</div>
+
+<div class="stats" id="stats"></div>
+
+<div id="form" class="form hidden">
+<input id="deInput" placeholder="Немецкий">
+<input id="ruInput" placeholder="Перевод">
+<div class="row">
+<button class="green" onclick="saveCard()">💾 Сохранить</button>
+<button class="gray" onclick="closeForm()">Отмена</button>
+</div>
+</div>
+</div>
+
+<div id="cards"></div>
+
+</div>
+
+<script>
+const KEY="de_ru_cards_v1";
+
+const DEFAULT=[
+ {
+  de:"Einen schönen Tag noch!",
+  ru:"Хорошего дня!",
+  learned:false
+ }
+];
+
+let cards=[];
+let editIndex=-1;
+
+function load(){
+ try{
+  const saved=localStorage.getItem(KEY);
+  cards=saved?JSON.parse(saved):JSON.parse(JSON.stringify(DEFAULT));
+ }catch(e){
+  cards=JSON.parse(JSON.stringify(DEFAULT));
+ }
+ render();
+}
+
+function save(){
+ localStorage.setItem(KEY,JSON.stringify(cards));
+ render();
+}
+
+function render(){
+ const box=document.getElementById("cards");
+ const learned=cards.filter(x=>x.learned).length;
+
+ document.getElementById("stats").textContent=
+ "Всего карточек: "+cards.length+
+ " | Выучено: "+learned+
+ " | Осталось: "+(cards.length-learned);
+
+ box.innerHTML="";
+
+ cards.forEach((c,i)=>{
+  const el=document.createElement("div");
+  el.className="card";
+
+  const de=document.createElement("div");
+  de.className="de";
+  de.textContent=c.de;
+
+  const ru=document.createElement("div");
+  ru.className="ru";
+  ru.textContent=c.ru;
+
+  const buttons=document.createElement("div");
+  buttons.className="row";
+
+  const learn=document.createElement("button");
+  learn.className="green";
+  learn.textContent=c.learned?"↩️ Не выучил":"✅ Выучил";
+  learn.onclick=()=>toggleLearn(i);
+
+  const edit=document.createElement("button");
+  edit.className="orange";
+  edit.textContent="✏️ Редактировать";
+  edit.onclick=()=>editCard(i);
+
+  const del=document.createElement("button");
+  del.className="red";
+  del.textContent="🗑 Удалить";
+  del.onclick=()=>deleteCard(i);
+
+  buttons.append(learn,edit,del);
+  el.append(de,ru,buttons);
+  box.appendChild(el);
+ });
+}
+
+function showAdd(){
+ editIndex=-1;
+ document.getElementById("deInput").value="";
+ document.getElementById("ruInput").value="";
+ document.getElementById("form").classList.remove("hidden");
+ document.getElementById("deInput").focus();
+}
+
+function closeForm(){
+ document.getElementById("form").classList.add("hidden");
+}
+
+function saveCard(){
+ const de=document.getElementById("deInput").value.trim();
+ const ru=document.getElementById("ruInput").value.trim();
+
+ if(!de || !ru){
+  alert("Введите немецкий текст и перевод.");
+  return;
+ }
+
+ if(editIndex>=0){
+  cards[editIndex].de=de;
+  cards[editIndex].ru=ru;
+ }else{
+  cards.push({de:de,ru:ru,learned:false});
+ }
+
+ closeForm();
+ save();
+}
+
+function editCard(i){
+ editIndex=i;
+ document.getElementById("deInput").value=cards[i].de;
+ document.getElementById("ruInput").value=cards[i].ru;
+ document.getElementById("form").classList.remove("hidden");
+}
+
+function deleteCard(i){
+ if(confirm("Удалить эту карточку?")){
+  cards.splice(i,1);
+  save();
+ }
+}
+
+function toggleLearn(i){
+ cards[i].learned=!cards[i].learned;
+ save();
+}
+
+function resetCards(){
+ if(confirm("Удалить все карточки и оставить только одну стартовую?")){
+  cards=JSON.parse(JSON.stringify(DEFAULT));
+  save();
+ }
+}
+
+load();
+</script>
+
+</body>
+</html>

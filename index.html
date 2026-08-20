@@ -1,252 +1,1772 @@
 <!DOCTYPE html>
-<html lang="ru">
-<head>
+<html lang="ru"><head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Немецкий язык DE/RU</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇩🇪 Немецкий язык DE/RU</title>
 <style>
+:root{
+  --bg:#0f172a;
+  --panel:#111c34;
+  --panel2:#182544;
+  --line:#2b3a63;
+  --text:#eef4ff;
+  --muted:#b8c6e3;
+  --blue:#3b82f6;
+  --green:#16a34a;
+  --red:#dc2626;
+  --amber:#f59e0b;
+  --violet:#8b5cf6;
+}
 *{box-sizing:border-box}
 body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#0f172a;
- color:#eef4ff;
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(180deg,#09111f 0%, #0f172a 100%);
+  color:var(--text);
+  font-size:18px;
 }
-.wrap{
- max-width:900px;
- margin:auto;
- padding:16px;
+.wrap{max-width:1350px;margin:0 auto;padding:20px}
+.card,.toolbar,.modal-card{
+  background:rgba(17,28,52,.96);
+  border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.20);
 }
-.panel{
- background:#111c34;
- border:1px solid #2b3a63;
- border-radius:18px;
- padding:18px;
- margin-bottom:16px;
+.toolbar{padding:18px;margin-bottom:18px}
+h1,h2,h3{margin:0 0 12px 0}
+.sub{color:var(--muted);font-size:15px;margin-top:8px;line-height:1.45}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row > *{flex:1 1 180px}
+input,select,textarea{
+  width:100%;
+  border:1px solid #364a79;
+  background:#0b1325;
+  color:white;
+  border-radius:12px;
+  padding:12px 14px;
+  font-size:16px;
 }
-h1{font-size:26px;margin:0 0 15px}
-button,input{
- font-size:16px;
- border:0;
- border-radius:11px;
- padding:11px 13px;
-}
+textarea{min-height:84px;resize:vertical}
 button{
- background:#3b82f6;
- color:white;
- cursor:pointer;
- margin:4px;
+  border:none;
+  border-radius:12px;
+  padding:11px 14px;
+  font-size:16px;
+  cursor:pointer;
+  color:white;
+  background:var(--blue);
 }
-.green{background:#16a34a}
-.red{background:#dc2626}
-.orange{background:#f59e0b;color:#111}
-.gray{background:#475569}
-.row{
- display:flex;
- gap:7px;
- flex-wrap:wrap;
+button:hover{filter:brightness(1.08)}
+button.secondary{background:#475569}
+button.learn{background:var(--green)}
+button.edit{background:var(--amber);color:#1f1300}
+button.delete{background:var(--red)}
+button.violet{background:var(--violet)}
+button.ghost{
+  background:transparent;
+  border:1px solid #41527f;
 }
-.card{
- background:#182544;
- border:1px solid #33456f;
- border-radius:17px;
- padding:18px;
- margin-top:14px;
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.stat{
+  padding:10px 14px;
+  border-radius:14px;
+  background:#0b1325;
+  border:1px solid #26365f;
+  color:#d9e5ff;
+  font-size:15px;
 }
-.de{
- font-size:25px;
- font-weight:bold;
- margin-bottom:10px;
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(360px,1fr));
+  gap:16px;
 }
-.ru{
- font-size:20px;
- color:#cbd5e1;
- margin-bottom:15px;
+.sign-card{
+  padding:16px;
+  display:grid;
+  grid-template-columns:120px 1fr;
+  gap:14px;
 }
-.stats{
- margin:12px 0;
- color:#cbd5e1;
+.thumb{
+  width:120px;height:120px;border-radius:16px;
+  background:#09101f;
+  border:1px solid #33456f;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
 }
-input{
- width:100%;
- margin:5px 0;
- background:#0b1325;
- color:white;
- border:1px solid #364a79;
+.thumb img{width:100%;height:100%;object-fit:contain;background:white}
+.sign-head{
+  display:flex;justify-content:space-between;gap:12px;align-items:flex-start;
 }
-.form{
- margin-top:15px;
- padding-top:15px;
- border-top:1px solid #33456f;
+.title{font-size:23px;font-weight:700;line-height:1.2}
+.title.learned{color:#fde047}
+.code{
+  display:inline-block;
+  margin-top:6px;
+  font-size:14px;
+  padding:4px 9px;
+  border-radius:999px;
+  background:#0b1325;
+  border:1px solid #2e446f;
+  color:#ccdbff;
 }
-.hidden{display:none}
+.category{
+  display:inline-block;
+  margin-top:6px;
+  font-size:13px;
+  color:#d7e4ff;
+  padding:4px 9px;
+  border-radius:999px;
+  background:#162546;
+  border:1px solid #314670;
+}
+.meta{color:var(--muted);margin-top:6px;line-height:1.45}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.empty{
+  padding:24px;
+  border:1px dashed #405584;
+  border-radius:16px;
+  color:#d7e4ff;
+  text-align:center;
+  background:#101a31;
+}
+.top-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.hidden{display:none !important}
+
+.modal{
+  position:fixed; inset:0; background:rgba(2,6,23,.72);
+  display:none; align-items:center; justify-content:center;
+  padding:16px; z-index:1000;
+}
+.modal.open{display:flex}
+.modal-card{
+  width:min(900px,100%);
+  max-height:92vh;
+  overflow:auto;
+  padding:18px;
+}
+.preview{
+  width:160px;height:160px;border-radius:18px;
+  border:1px solid #3a4e79;background:#09101f;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;margin:0 auto;
+}
+.preview img{width:100%;height:100%;object-fit:contain;background:white}
+.form-grid{
+  display:grid;
+  grid-template-columns:180px 1fr;
+  gap:18px;
+  align-items:start;
+}
+.small{font-size:13px;color:var(--muted)}
+.footer-note{
+  margin-top:18px;
+  color:#94a3b8;
+  font-size:13px;
+  line-height:1.5;
+}
+@media (max-width:780px){
+  .grid{grid-template-columns:1fr}
+  .sign-card{grid-template-columns:1fr}
+  .thumb{width:100%;height:180px}
+  .form-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
-
 <body>
 <div class="wrap">
+  <div class="toolbar">
+    <h1 id="appMainTitle">🇩🇪 Немецкий язык A 1 1</h1>
+    <div class="sub" id="appSubTitle"></div>
+    <div class="row" style="margin-top:14px">
+      <input id="search" placeholder="Поиск по слову, переводу, примеру или категории..." oninput="render()">
+      <select id="categoryFilter" onchange="render()"><option value="all">Все категории</option><option value="Substantiv — существительное">Substantiv — существительное</option><option value="Verb — глагол">Verb — глагол</option><option value="Adjektiv — прилагательное">Adjektiv — прилагательное</option><option value="Pronomen — местоимение">Pronomen — местоимение</option><option value="Artikel — артикль">Artikel — артикль</option><option value="Adverb — наречие">Adverb — наречие</option><option value="Präposition — предлог">Präposition — предлог</option><option value="Konjunktion — союз">Konjunktion — союз</option><option value="Interjektion — междометие">Interjektion — междометие</option><option value="Numerale — числительное">Numerale — числительное</option><option value="Modalwort / Modalpartikel — модальные частицы">Modalwort / Modalpartikel — модальные частицы</option><option value="Partikel — частица">Partikel — частица</option><option value="Negation — отрицание">Negation — отрицание</option><option value="Antwortpartikel — частица ответа">Antwortpartikel — частица ответа</option><option value="Fokuspartikel — усилительная / выделительная частица">Fokuspartikel — усилительная / выделительная частица</option><option value="Possessivpronomen — притяжательное местоимение">Possessivpronomen — притяжательное местоимение</option><option value="Reflexivpronomen — возвратное местоимение">Reflexivpronomen — возвратное местоимение</option><option value="Demonstrativpronomen — указательное местоимение">Demonstrativpronomen — указательное местоимение</option><option value="Relativpronomen — относительное местоимение">Relativpronomen — относительное местоимение</option><option value="Импорт TXT">Импорт TXT</option><option value="Фразы">Фразы</option><option value="Существительные">Существительные</option><option value="Ich esse einen Apfel.">Ich esse einen Apfel.</option><option value="Substantiv">Substantiv</option><option value="A1">A1</option><option value="A2">A2</option><option value="Да! Eins, zwei,">Да! Eins, zwei,</option><option value="путеводитель по аэропорту">путеводитель по аэропорту</option><option value="терминал die">терминал die</option><option value="вход, доступ das">вход, доступ das</option><option value="багажная бирка der">багажная бирка der</option><option value="выдача багажа das Gepäckband">выдача багажа das Gepäckband</option><option value="время">время</option><option value="выход на посадку das">выход на посадку das</option><option value="выход на">выход на</option><option value="информация">информация</option><option value="аэропорт">аэропорт</option><option value="забирать, получать wünschen">забирать, получать wünschen</option><option value="садиться, входить">садиться, входить</option><option value="хороший, хорошо vor">хороший, хорошо vor</option><option value="и">и</option><option value="полёт, рейс">полёт, рейс</option><option value="багажная лента Abflugzeit">багажная лента Abflugzeit</option><option value="мусорная площадка;">мусорная площадка;</option><option value="опустошается;">опустошается;</option><option value="лежащий">лежащий</option><option value="чтобы; для того">чтобы; для того</option><option value="проблематика; совокупность">проблематика; совокупность</option><option value="решать;">решать;</option><option value="применять;">применять;</option><option value="само собой разумеющийся;">само собой разумеющийся;</option></select>
+      <select id="statusFilter" onchange="render()">
+        <option value="all">Все</option>
+        <option value="not_learned">Не выучены</option>
+        <option value="learned">Выучены</option>
+      </select>
+    </div>
+    <div class="top-actions">
+      <button class="violet" onclick="toggleCategoryEditor()">🗂 Редактировать категории</button>
+      <button class="ghost" onclick="toggleHeaderEditor()">✏️ Редактировать заголовок</button>
+      <button onclick="openAddModal()">➕ Добавить слово или категорию</button>
+      <button class="secondary" onclick="resetToDefault()">♻️ Сбросить до 1 карточки</button>
+      <button class="ghost" onclick="exportData()">💾 Экспорт JSON</button>
+      <button class="ghost" onclick="exportTxtData()">📄 Экспорт TXT</button>
+      <label class="ghost" style="display:inline-flex;align-items:center;gap:8px;padding:11px 14px;border-radius:12px;border:1px solid #41527f;cursor:pointer">
+        📥 Импорт JSON
+        <input id="importFile" type="file" accept=".json,.txt,application/json,text/plain,*/*" onchange="importData(event)" style="display:none">
+      </label>
 
-<div class="panel">
-<h1>🇩🇪 Немецкий язык DE/RU</h1>
+      <button class="ghost" onclick="toggleManualJsonImport()">📋 Вставить JSON вручную</button>
+      <label class="ghost" style="display:inline-flex;align-items:center;gap:8px;padding:11px 14px;border-radius:12px;border:1px solid #41527f;cursor:pointer">
+        📄 Импорт TXT
+        <input id="importTxtFile" type="file" accept=".txt,text/plain" onchange="importTxtData(event)" style="display:none">
+      </label>
+    </div>
+    <div class="small" style="margin-top:10px;line-height:1.55">
+      TXT можно импортировать строками вида <strong>deutsch | русский | пример DE | пример RU | категория</strong><br>
+      Или в простом виде: <strong>Haus - дом</strong> / <strong>Guten Tag! | Добрый день!</strong>. Импорт из TXT добавляет карточки в приложение и сохраняет их для следующих запусков.
+    </div>
 
-<div class="row">
-<button onclick="showAdd()">➕ Добавить карточку</button>
-<button class="gray" onclick="resetCards()">♻️ Сброс до 1 карточки</button>
+    <div id="manualJsonImportBox" class="card hidden" style="margin-top:14px;padding:14px">
+      <h3 style="margin-bottom:10px">Импорт JSON вручную</h3>
+      <div class="small" style="margin-bottom:8px">Откройте JSON-файл как текст, скопируйте всё содержимое и вставьте сюда.</div>
+      <textarea id="manualJsonInput" style="min-height:180px" placeholder="Вставьте JSON сюда"></textarea>
+      <div class="top-actions" style="margin-top:10px">
+        <button class="violet" onclick="importJsonFromText()">📥 Импортировать из текста</button>
+        <button class="ghost" onclick="document.getElementById(&quot;manualJsonInput&quot;).value=&quot;&quot;">Очистить</button>
+      </div>
+      <div id="manualJsonStatus" class="small" style="margin-top:8px"></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat" id="totalStat">Всего карточек: 1</div>
+      <div class="stat" id="learnedStat">Выучено: 0</div>
+      <div class="stat" id="leftStat">Осталось: 1</div>
+      <div class="stat" id="categoriesStat">Категорий: 1 | Показано: 1</div>
+    </div>
+
+    <div id="headerEditor" class="card" style="margin-top:14px;padding:14px">
+      <h3 style="margin-bottom:10px">Редактирование заголовка</h3>
+      <input id="headerInput" placeholder="Введите заголовок" style="margin-bottom:10px">
+      <input id="subHeaderInput" placeholder="Введите подзаголовок">
+      <div class="top-actions" style="margin-top:10px">
+        <button id="saveHeaderBtn" class="violet" onclick="saveHeader()">✅ Сохранено</button>
+      </div>
+      <div id="headerStatus" class="small" style="margin-top:8px">Сохранено</div>
+    </div>
+
+    <div id="categoryEditor" class="card hidden" style="margin-top:14px;padding:14px">
+      <h3 style="margin-bottom:10px">Редактирование категорий и частей речи</h3>
+      <div class="small" style="margin-bottom:10px">Каждая категория — с новой строки. После сохранения список частей речи, разрядов и служебных слов обновится во всех формах и фильтрах.</div>
+      <textarea id="categoryListInput" style="min-height:180px" placeholder="Введите категории, каждую с новой строки"></textarea>
+      <div class="top-actions" style="margin-top:10px">
+        <button id="saveCategoriesBtn" class="violet" onclick="saveCategories()">💾 Сохранить категории</button>
+        <button class="ghost" onclick="resetCategories()">↺ Сбросить категории</button>
+      </div>
+      <div id="categorySaveStatus" class="small" style="margin-top:8px"></div>
+    </div>
+  </div>
+
+  <div id="list" class="grid">
+    <div class="card sign-card">
+      <div class="thumb"><img src="data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%0A%20%20%20%20%20%20%20%20%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2212%22%20fill%3D%22%232563eb%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%2288%22%20height%3D%2288%22%20rx%3D%2210%22%20fill%3D%22%232563eb%22%20stroke%3D%22%230f172a%22%20stroke-width%3D%224%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2250%22%20y%3D%2258%22%20text-anchor%3D%22middle%22%20font-size%3D%2230%22%20font-family%3D%22Arial%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3E%F0%9F%93%84%3C%2Ftext%3E%0A%20%20%20%20%20%20%3C%2Fsvg%3E" alt="Lernwortschatz"></div>
+      <div>
+        <div class="sign-head">
+          <div>
+            <div class="title ">Lernwortschatz</div>
+            <div class="meta"><strong>RU:</strong> Ankommen</div>
+            <div class="code">Карточка TXT1</div>
+            <div class="category">Импорт TXT</div>
+          </div>
+        </div>
+        <div class="meta" style="margin-top:12px"><strong>DE:</strong> —</div>
+        <div class="meta"><strong>RU:</strong> —</div>
+        <div class="actions">
+          <button class="learn" onclick="toggleLearned(0)">✅ Выучил</button>
+          <button class="edit" onclick="openEditModal(0)">✏️ Редактировать</button>
+          <button class="delete" onclick="deleteSign(0)">🗑 Удалить</button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card sign-card">
+      <div class="thumb"><img src="data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%0A%20%20%20%20%20%20%20%20%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2212%22%20fill%3D%22%232563eb%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%2288%22%20height%3D%2288%22%20rx%3D%2210%22%20fill%3D%22%232563eb%22%20stroke%3D%22%230f172a%22%20stroke-width%3D%224%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2250%22%20y%3D%2258%22%20text-anchor%3D%22middle%22%20font-size%3D%2230%22%20font-family%3D%22Arial%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3E%F0%9F%93%84%3C%2Ftext%3E%0A%20%20%20%20%20%20%3C%2Fsvg%3E" alt="glücklich"></div>
+      <div>
+        <div class="sign-head">
+          <div>
+            <div class="title ">glücklich</div>
+            <div class="meta"><strong>RU:</strong> счастливый</div>
+            <div class="code">Карточка TXT2</div>
+            <div class="category">Импорт TXT</div>
+          </div>
+        </div>
+        <div class="meta" style="margin-top:12px"><strong>DE:</strong> —</div>
+        <div class="meta"><strong>RU:</strong> —</div>
+        <div class="actions">
+          <button class="learn" onclick="toggleLearned(1)">✅ Выучил</button>
+          <button class="edit" onclick="openEditModal(1)">✏️ Редактировать</button>
+          <button class="delete" onclick="deleteSign(1)">🗑 Удалить</button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card sign-card">
+      <div class="thumb"><img src="data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%0A%20%20%20%20%20%20%20%20%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2212%22%20fill%3D%22%232563eb%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%2288%22%20height%3D%2288%22%20rx%3D%2210%22%20fill%3D%22%232563eb%22%20stroke%3D%22%230f172a%22%20stroke-width%3D%224%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2250%22%20y%3D%2258%22%20text-anchor%3D%22middle%22%20font-size%3D%2230%22%20font-family%3D%22Arial%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3E%F0%9F%93%84%3C%2Ftext%3E%0A%20%20%20%20%20%20%3C%2Fsvg%3E" alt="weil"></div>
+      <div>
+        <div class="sign-head">
+          <div>
+            <div class="title ">weil</div>
+            <div class="meta"><strong>RU:</strong> потому что</div>
+            <div class="code">Карточка TXT21</div>
+            <div class="category">Импорт TXT</div>
+          </div>
+        </div>
+        <div class="meta" style="margin-top:12px"><strong>DE:</strong> —</div>
+        <div class="meta"><strong>RU:</strong> —</div>
+        <div class="actions">
+          <button class="learn" onclick="toggleLearned(2)">✅ Выучил</button>
+          <button class="edit" onclick="openEditModal(2)">✏️ Редактировать</button>
+          <button class="delete" onclick="deleteSign(2)">🗑 Удалить</button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card sign-card">
+      <div class="thumb"><img src="data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%0A%20%20%20%20%20%20%20%20%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2212%22%20fill%3D%22%232563eb%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%2288%22%20height%3D%2288%22%20rx%3D%2210%22%20fill%3D%22%232563eb%22%20stroke%3D%22%230f172a%22%20stroke-width%3D%224%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2250%22%20y%3D%2258%22%20text-anchor%3D%22middle%22%20font-size%3D%2230%22%20font-family%3D%22Arial%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3E%F0%9F%93%84%3C%2Ftext%3E%0A%20%20%20%20%20%20%3C%2Fsvg%3E" alt="LEKTION 1"></div>
+      <div>
+        <div class="sign-head">
+          <div>
+            <div class="title ">LEKTION 1</div>
+            <div class="meta"><strong>RU:</strong> ANKOMMEN</div>
+            <div class="code">Карточка TXT24</div>
+            <div class="category">Импорт TXT</div>
+          </div>
+        </div>
+        <div class="meta" style="margin-top:12px"><strong>DE:</strong> —</div>
+        <div class="meta"><strong>RU:</strong> —</div>
+        <div class="actions">
+          <button class="learn" onclick="toggleLearned(3)">✅ Выучил</button>
+          <button class="edit" onclick="openEditModal(3)">✏️ Редактировать</button>
+          <button class="delete" onclick="deleteSign(3)">🗑 Удалить</button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card sign-card">
+      <div class="thumb"><img src="data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%0A%20%20%20%20%20%20%20%20%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2212%22%20fill%3D%22%232563eb%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%2288%22%20height%3D%2288%22%20rx%3D%2210%22%20fill%3D%22%232563eb%22%20stroke%3D%22%230f172a%22%20stroke-width%3D%224%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2250%22%20y%3D%2258%22%20text-anchor%3D%22middle%22%20font-size%3D%2230%22%20font-family%3D%22Arial%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3E%F0%9F%93%84%3C%2Ftext%3E%0A%20%20%20%20%20%20%3C%2Fsvg%3E" alt="der Arbeitgeber,"></div>
+      <div>
+        <div class="sign-head">
+          <div>
+            <div class="title ">der Arbeitgeber,</div>
+            <div class="meta"><strong>RU:</strong> — работодатель</div>
+            <div class="code">Карточка TXT25</div>
+            <div class="category">Импорт TXT</div>
+          </div>
+        </div>
+        <div class="meta" style="margin-top:12px"><strong>DE:</strong> —</div>
+        <div class="meta"><strong>RU:</strong> —</div>
+        <div class="actions">
+          <button class="learn" onclick="toggleLearned(4)">✅ Выучил</button>
+          <button class="edit" onclick="openEditModal(4)">✏️ Редактировать</button>
+          <button class="delete" onclick="deleteSign(4)">🗑 Удалить</button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card sign-card">
+      <div class="thumb"><img src="data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%0A%20%20%20%20%20%20%20%20%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2212%22%20fill%3D%22%232563eb%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%2288%22%20height%3D%2288%22%20rx%3D%2210%22%20fill%3D%22%232563eb%22%20stroke%3D%22%230f172a%22%20stroke-width%3D%224%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2250%22%20y%3D%2258%22%20text-anchor%3D%22middle%22%20font-size%3D%2230%22%20font-family%3D%22Arial%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3E%F0%9F%93%84%3C%2Ftext%3E%0A%20%20%20%20%20%20%3C%2Fsvg%3E" alt="gestern"></div>
+      <div>
+        <div class="sign-head">
+          <div>
+            <div class="title ">gestern</div>
+            <div class="meta"><strong>RU:</strong> вчера</div>
+            <div class="code">Карточка TXT32</div>
+            <div class="category">Импорт TXT</div>
+          </div>
+        </div>
+        <div class="meta" style="margin-top:12px"><strong>DE:</strong> —</div>
+        <div class="meta"><strong>RU:</strong> —</div>
+        <div class="actions">
+          <button class="learn" onclick="toggleLearned(5)">✅ Выучил</button>
+          <button class="edit" onclick="openEditModal(5)">✏️ Редактировать</button>
+          <button class="delete" onclick="deleteSign(5)">🗑 Удалить</button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card sign-card">
+      <div class="thumb"><img src="data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%0A%20%20%20%20%20%20%20%20%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2212%22%20fill%3D%22%232563eb%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%2288%22%20height%3D%2288%22%20rx%3D%2210%22%20fill%3D%22%232563eb%22%20stroke%3D%22%230f172a%22%20stroke-width%3D%224%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2250%22%20y%3D%2258%22%20text-anchor%3D%22middle%22%20font-size%3D%2230%22%20font-family%3D%22Arial%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3E%F0%9F%93%84%3C%2Ftext%3E%0A%20%20%20%20%20%20%3C%2Fsvg%3E" alt="der Arbeitgeber,"></div>
+      <div>
+        <div class="sign-head">
+          <div>
+            <div class="title ">der Arbeitgeber,</div>
+            <div class="meta"><strong>RU:</strong> – работодатель</div>
+            <div class="code">Карточка TXT52</div>
+            <div class="category">Импорт TXT</div>
+          </div>
+        </div>
+        <div class="meta" style="margin-top:12px"><strong>DE:</strong> —</div>
+        <div class="meta"><strong>RU:</strong> —</div>
+        <div class="actions">
+          <button class="learn" onclick="toggleLearned(6)">✅ Выучил</button>
+          <button class="edit" onclick="openEditModal(6)">✏️ Редактировать</button>
+          <button class="delete" onclick="deleteSign(6)">🗑 Удалить</button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card sign-card">
+      <div class="thumb"><img src="data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%0A%20%20%20%20%20%20%20%20%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2212%22%20fill%3D%22%232563eb%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%2288%22%20height%3D%2288%22%20rx%3D%2210%22%20fill%3D%22%232563eb%22%20stroke%3D%22%230f172a%22%20stroke-width%3D%224%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2250%22%20y%3D%2258%22%20text-anchor%3D%22middle%22%20font-size%3D%2230%22%20font-family%3D%22Arial%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3E%F0%9F%93%84%3C%2Ftext%3E%0A%20%20%20%20%20%20%3C%2Fsvg%3E" alt="LEKTION 2"></div>
+      <div>
+        <div class="sign-head">
+          <div>
+            <div class="title ">LEKTION 2</div>
+            <div class="meta"><strong>RU:</strong> ZU HAUSE</div>
+            <div class="code">Карточка TXT71</div>
+            <div class="category">Импорт TXT</div>
+          </div>
+        </div>
+        <div class="meta" style="margin-top:12px"><strong>DE:</strong> —</div>
+        <div class="meta"><strong>RU:</strong> —</div>
+        <div class="actions">
+          <button class="learn" onclick="toggleLearned(7)">✅ Выучил</button>
+          <button class="edit" onclick="openEditModal(7)">✏️ Редактировать</button>
+          <button class="delete" onclick="deleteSign(7)">🗑 Удалить</button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card sign-card">
+      <div class="thumb"><img src="data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%0A%20%20%20%20%20%20%20%20%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2212%22%20fill%3D%22%232563eb%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%2288%22%20height%3D%2288%22%20rx%3D%2210%22%20fill%3D%22%232563eb%22%20stroke%3D%22%230f172a%22%20stroke-width%3D%224%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2250%22%20y%3D%2258%22%20text-anchor%3D%22middle%22%20font-size%3D%2230%22%20font-family%3D%22Arial%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3E%F0%9F%93%84%3C%2Ftext%3E%0A%20%20%20%20%20%20%3C%2Fsvg%3E" alt="die Energie"></div>
+      <div>
+        <div class="sign-head">
+          <div>
+            <div class="title ">die Energie</div>
+            <div class="meta"><strong>RU:</strong> энергия</div>
+            <div class="code">Карточка TXT72</div>
+            <div class="category">Импорт TXT</div>
+          </div>
+        </div>
+        <div class="meta" style="margin-top:12px"><strong>DE:</strong> —</div>
+        <div class="meta"><strong>RU:</strong> —</div>
+        <div class="actions">
+          <button class="learn" onclick="toggleLearned(8)">✅ Выучил</button>
+          <button class="edit" onclick="openEditModal(8)">✏️ Редактировать</button>
+          <button class="delete" onclick="deleteSign(8)">🗑 Удалить</button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card sign-card">
+      <div class="thumb"><img src="data:image/svg+xml;charset=UTF-8,%0A%20%20%20%20%20%20%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%0A%20%20%20%20%20%20%20%20%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2212%22%20fill%3D%22%232563eb%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%2288%22%20height%3D%2288%22%20rx%3D%2210%22%20fill%3D%22%232563eb%22%20stroke%3D%22%230f172a%22%20stroke-width%3D%224%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2250%22%20y%3D%2258%22%20text-anchor%3D%22middle%22%20font-size%3D%2230%22%20font-family%3D%22Arial%22%20font-weight%3D%22700%22%20fill%3D%22white%22%3E%F0%9F%93%84%3C%2Ftext%3E%0A%20%20%20%20%20%20%3C%2Fsvg%3E" alt="selbst"></div>
+      <div>
+        <div class="sign-head">
+          <div>
+            <div class="title ">selbst</div>
+            <div class="meta"><strong>RU:</strong> сам</div>
+            <div class="code">Карточка TXT73</div>
+            <div class="category">Импорт TXT</div>
+          </div>
+        </div>
+        <div class="meta" style="margin-top:12px"><strong>DE:</strong> —</div>
+        <div class="meta"><strong>RU:</strong> —</div>
+        <div class="actions">
+          <button class="learn" onclick="toggleLearned(9)">✅ Выучил</button>
+          <button class="edit" onclick="openEditModal(9)">✏️ Редактировать</button>
+          <button class="delete" onclick="deleteSign(9)">🗑 Удалить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="card" style="margin:20px 0;padding:15px">
+<h2>💾 Сохранить приложение</h2>
+<input id="appName" placeholder="Название файла" style="width:100%;margin-top:10px">
+<button onclick="downloadApp()" style="margin-top:10px">Скачать приложение</button>
 </div>
 
-<div class="stats" id="stats"></div>
 
-<div id="form" class="form hidden">
-<input id="deInput" placeholder="Немецкий">
-<input id="ruInput" placeholder="Перевод">
-<div class="row">
-<button class="green" onclick="saveCard()">💾 Сохранить</button>
-<button class="gray" onclick="closeForm()">Отмена</button>
-</div>
-</div>
+  <div class="footer-note">
+    Данные сохраняются в браузере на этом устройстве. Для каждой карточки можно редактировать слово, перевод, пример и категорию.
+  </div>
 </div>
 
-<div id="cards"></div>
-
+<div class="modal" id="signModal">
+  <div class="modal-card">
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px">
+      <h2 id="modalTitle">Добавить карточку</h2>
+      <button class="secondary" onclick="closeModal()">✖ Закрыть</button>
+    </div>
+    <div class="form-grid">
+      <div>
+        <div class="preview"><img id="modalPreview" alt="preview" src="data:image/jpeg;base64,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"></div>
+        <div class="small" style="margin-top:10px">При желании можно загрузить свою картинку для карточки. Это не обязательно: приложение работает и просто как словарь с переводом.</div>
+      </div>
+      <div>
+        <div class="row">
+          <input id="signCode" placeholder="Номер или ID карточки, например 1">
+          <select id="signCategory"><option value="Substantiv — существительное">Substantiv — существительное</option><option value="Verb — глагол">Verb — глагол</option><option value="Adjektiv — прилагательное">Adjektiv — прилагательное</option><option value="Pronomen — местоимение">Pronomen — местоимение</option><option value="Artikel — артикль">Artikel — артикль</option><option value="Adverb — наречие">Adverb — наречие</option><option value="Präposition — предлог">Präposition — предлог</option><option value="Konjunktion — союз">Konjunktion — союз</option><option value="Interjektion — междометие">Interjektion — междометие</option><option value="Numerale — числительное">Numerale — числительное</option><option value="Modalwort / Modalpartikel — модальные частицы">Modalwort / Modalpartikel — модальные частицы</option><option value="Partikel — частица">Partikel — частица</option><option value="Negation — отрицание">Negation — отрицание</option><option value="Antwortpartikel — частица ответа">Antwortpartikel — частица ответа</option><option value="Fokuspartikel — усилительная / выделительная частица">Fokuspartikel — усилительная / выделительная частица</option><option value="Possessivpronomen — притяжательное местоимение">Possessivpronomen — притяжательное местоимение</option><option value="Reflexivpronomen — возвратное местоимение">Reflexivpronomen — возвратное местоимение</option><option value="Demonstrativpronomen — указательное местоимение">Demonstrativpronomen — указательное местоимение</option><option value="Relativpronomen — относительное местоимение">Relativpronomen — относительное местоимение</option><option value="Импорт TXT">Импорт TXT</option><option value="Фразы">Фразы</option><option value="Существительные">Существительные</option><option value="Ich esse einen Apfel.">Ich esse einen Apfel.</option><option value="Substantiv">Substantiv</option><option value="A1">A1</option><option value="A2">A2</option><option value="Да! Eins, zwei,">Да! Eins, zwei,</option><option value="путеводитель по аэропорту">путеводитель по аэропорту</option><option value="терминал die">терминал die</option><option value="вход, доступ das">вход, доступ das</option><option value="багажная бирка der">багажная бирка der</option><option value="выдача багажа das Gepäckband">выдача багажа das Gepäckband</option><option value="время">время</option><option value="выход на посадку das">выход на посадку das</option><option value="выход на">выход на</option><option value="информация">информация</option><option value="аэропорт">аэропорт</option><option value="забирать, получать wünschen">забирать, получать wünschen</option><option value="садиться, входить">садиться, входить</option><option value="хороший, хорошо vor">хороший, хорошо vor</option><option value="и">и</option><option value="полёт, рейс">полёт, рейс</option><option value="багажная лента Abflugzeit">багажная лента Abflugzeit</option><option value="мусорная площадка;">мусорная площадка;</option><option value="опустошается;">опустошается;</option><option value="лежащий">лежащий</option><option value="чтобы; для того">чтобы; для того</option><option value="проблематика; совокупность">проблематика; совокупность</option><option value="решать;">решать;</option><option value="применять;">применять;</option><option value="само собой разумеющийся;">само собой разумеющийся;</option></select>
+        </div>
+        <div class="row">
+          <input id="signNameDe" placeholder="Слово или фраза на немецком">
+          <input id="signNameRu" placeholder="Перевод на русском">
+        </div>
+        <div class="row">
+          <textarea id="signDescDe" placeholder="Пример или пояснение по-немецки"></textarea>
+          <textarea id="signDescRu" placeholder="Перевод примера или пояснение по-русски"></textarea>
+        </div>
+        <div class="row">
+          <input id="imageUrl" placeholder="Или вставьте ссылку / data URL картинки" oninput="refreshModalPreview()">
+          <label style="display:flex;align-items:center;padding:10px 12px;border:1px solid #364a79;border-radius:12px;background:#0b1325;cursor:pointer">
+            🖼️ Выбрать файл
+            <input id="imageFile" type="file" accept="image/*" style="display:none" onchange="loadModalImage(event)">
+          </label>
+        </div>
+        <div class="row">
+          <select id="signShape" onchange="updateAutoImage()">
+            <option value="warning">Шаблон картинки: карточка 1</option>
+            <option value="priority">Шаблон картинки: карточка 2</option>
+            <option value="prohibition">Шаблон картинки: карточка 3</option>
+            <option value="mandatory">Шаблон картинки: карточка 4</option>
+            <option value="guide">Шаблон картинки: карточка 5</option>
+            <option value="additional">Шаблон картинки: карточка 6</option>
+            <option value="custom">Шаблон картинки: только своя картинка</option>
+          </select>
+          <input id="symbolText" placeholder="Символ или эмодзи на карточке, например 📘, 🪑, 💬" oninput="updateAutoImage()">
+        </div>
+        <div class="row">
+          <button id="saveBtn" onclick="saveCurrentSign()" style="opacity: 1; cursor: pointer;">💾 Сохранить</button>
+          <button class="ghost" onclick="clearCustomImage()">Сбросить свою картинку</button>
+        </div>
+        <div id="saveStatus" class="small" style="margin-top: 8px; color: rgb(134, 239, 172);"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-const KEY="de_ru_cards_v1";
+const KEY = "deutsch_lernen_cards_app_v2";
+const CATEGORIES_KEY = "deutsch_lernen_cards_categories_v2";
+const LEGACY_KEY = "deutsch_lernen_cards_legacy_v2";
+const DB_NAME = "deutsch_lernen_cards_db_v2";
+const STORE_NAME = "app_store";
+const STORE_KEY = "signs";
+const ORIGINAL_DEFAULT_CATEGORIES = [
+  "Substantiv — существительное",
+  "Verb — глагол",
+  "Adjektiv — прилагательное",
+  "Pronomen — местоимение",
+  "Artikel — артикль",
+  "Adverb — наречие",
+  "Präposition — предлог",
+  "Konjunktion — союз",
+  "Interjektion — междометие",
+  "Numerale — числительное",
+  "Modalwort / Modalpartikel — модальные частицы",
+  "Partikel — частица",
+  "Negation — отрицание",
+  "Antwortpartikel — частица ответа",
+  "Fokuspartikel — усилительная / выделительная частица",
+  "Possessivpronomen — притяжательное местоимение",
+  "Reflexivpronomen — возвратное местоимение",
+  "Demonstrativpronomen — указательное местоимение",
+  "Relativpronomen — относительное местоимение",
+  "Импорт TXT",
+  "Фразы",
+  "Существительные",
+  "Ich esse einen Apfel.",
+  "Substantiv",
+  "A1",
+  "A2",
+  "Да! Eins, zwei,",
+  "путеводитель по аэропорту",
+  "терминал die",
+  "вход, доступ das",
+  "багажная бирка der",
+  "выдача багажа das Gepäckband",
+  "время",
+  "выход на посадку das",
+  "выход на",
+  "информация",
+  "аэропорт",
+  "забирать, получать wünschen",
+  "садиться, входить",
+  "хороший, хорошо vor",
+  "и",
+  "полёт, рейс",
+  "багажная лента Abflugzeit",
+  "мусорная площадка;",
+  "опустошается;",
+  "лежащий",
+  "чтобы; для того",
+  "проблематика; совокупность",
+  "решать;",
+  "применять;",
+  "само собой разумеющийся;"
+];
+const DEFAULT_CATEGORIES = [...ORIGINAL_DEFAULT_CATEGORIES];
 
-const DEFAULT=[
- {
-  de:"Einen schönen Tag noch!",
-  ru:"Хорошего дня!",
-  learned:false
- }
+
+function loadPersistedCategories(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(CATEGORIES_KEY) || "null");
+    if(Array.isArray(saved)){
+      const cleaned = saved.map(x => String(x || "").trim()).filter(Boolean);
+      if(cleaned.length) return cleaned;
+    }
+  }catch(_){}
+  return [...DEFAULT_CATEGORIES];
+}
+function persistCategories(list){
+  const cleaned = [...new Set((list || []).map(x => String(x || "").trim()).filter(Boolean))];
+  if(!cleaned.length) throw new Error("Нужна хотя бы одна категория.");
+  categoryOptions = cleaned;
+  localStorage.setItem(CATEGORIES_KEY, JSON.stringify(categoryOptions));
+}
+function fillCategorySelectors(){
+  const filter = document.getElementById("categoryFilter");
+  const signCategory = document.getElementById("signCategory");
+  const currentFilter = filter ? (filter.value || "all") : "all";
+  const currentSignCategory = signCategory ? (signCategory.value || "") : "";
+  if(filter){
+    filter.innerHTML = '<option value="all">Все категории</option>' + categoryOptions.map(cat => '<option value="' + escapeHtml(cat) + '">' + escapeHtml(cat) + '</option>').join("");
+    filter.value = [...filter.options].some(o => o.value === currentFilter) ? currentFilter : "all";
+  }
+  if(signCategory){
+    signCategory.innerHTML = categoryOptions.map(cat => '<option value="' + escapeHtml(cat) + '">' + escapeHtml(cat) + '</option>').join("");
+    signCategory.value = [...signCategory.options].some(o => o.value === currentSignCategory) ? currentSignCategory : (categoryOptions[0] || "");
+  }
+}
+function toggleCategoryEditor(){
+  const box = document.getElementById("categoryEditor");
+  box.classList.toggle("hidden");
+  if(!box.classList.contains("hidden")){
+    document.getElementById("categoryListInput").value = categoryOptions.join("\n");
+  }
+}
+function setCategorySaveStatus(message="", isBusy=false, ok=false){
+  const status = document.getElementById("categorySaveStatus");
+  const btn = document.getElementById("saveCategoriesBtn");
+  if(!status || !btn) return;
+  status.textContent = message;
+  status.style.color = isBusy ? "#fde68a" : (ok ? "#86efac" : "#b8c6e3");
+  btn.disabled = isBusy;
+  btn.textContent = isBusy ? "⏳ Сохраняю..." : (ok ? "✅ Сохранено" : "💾 Сохранить категории");
+  if(ok){
+    setTimeout(() => {
+      btn.textContent = "💾 Сохранить категории";
+      if(status.textContent === message) status.textContent = "";
+    }, 1800);
+  }
+}
+function saveCategories(){
+  try{
+    setCategorySaveStatus("Сохраняю...", true);
+    const raw = document.getElementById("categoryListInput").value;
+    const list = raw.split(/\r?\n/).map(x => x.trim()).filter(Boolean);
+    persistCategories(list);
+    fillCategorySelectors();
+    loadHeader();
+    render();
+    setCategorySaveStatus("Категории сохранены.", false, true);
+  }catch(err){
+    setCategorySaveStatus(err.message || "Не удалось сохранить категории.", false);
+    alert(err.message || "Не удалось сохранить категории.");
+  }
+}
+function resetCategories(){
+  persistCategories([...DEFAULT_CATEGORIES]);
+  fillCategorySelectors();
+  document.getElementById("categoryListInput").value = categoryOptions.join("\n");
+  render();
+  setCategorySaveStatus("Категории сброшены.", false, true);
+}
+
+function svgToDataUrl(svg){
+  return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+}
+function svgToBase64DataUrl(svg){
+  return "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svg)));
+}
+
+function makeSignSvg(shape="warning", symbol="!", label=""){
+  const safeSymbol = String(symbol || "").replace(/[<>&]/g, "");
+  const safeLabel = String(label || "").replace(/[<>&]/g, "");
+  let svg = "";
+  if(shape === "warning"){
+    svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <rect width="100" height="100" fill="white"/>
+        <polygon points="50,8 92,82 8,82" fill="white" stroke="#d90429" stroke-width="8"/>
+        <text x="50" y="62" text-anchor="middle" font-size="28" font-family="Arial" font-weight="700" fill="#111">${safeSymbol || "!"}</text>
+      </svg>`;
+  } else if(shape === "priority"){
+    svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <rect width="100" height="100" fill="white"/>
+        <polygon points="50,7 93,50 50,93 7,50" fill="white" stroke="#111" stroke-width="4"/>
+        <polygon points="50,17 83,50 50,83 17,50" fill="#facc15" stroke="#111" stroke-width="3"/>
+        <text x="50" y="56" text-anchor="middle" font-size="10" font-family="Arial" fill="#111">${safeLabel}</text>
+      </svg>`;
+  } else if(shape === "prohibition"){
+    svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <rect width="100" height="100" fill="white"/>
+        <circle cx="50" cy="50" r="40" fill="white" stroke="#d90429" stroke-width="10"/>
+        <text x="50" y="59" text-anchor="middle" font-size="${safeSymbol.length > 3 ? 20 : 28}" font-family="Arial" font-weight="700" fill="#111">${safeSymbol || "⛔"}</text>
+      </svg>`;
+  } else if(shape === "mandatory"){
+    svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <rect width="100" height="100" fill="white"/>
+        <circle cx="50" cy="50" r="40" fill="#2563eb" stroke="#0f172a" stroke-width="4"/>
+        <text x="50" y="59" text-anchor="middle" font-size="${safeSymbol.length > 3 ? 18 : 30}" font-family="Arial" font-weight="700" fill="white">${safeSymbol || "→"}</text>
+      </svg>`;
+  } else if(shape === "guide"){
+    svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <rect width="100" height="100" rx="12" fill="#2563eb"/>
+        <rect x="6" y="6" width="88" height="88" rx="10" fill="#2563eb" stroke="#0f172a" stroke-width="4"/>
+        <text x="50" y="58" text-anchor="middle" font-size="${safeSymbol.length > 3 ? 20 : 30}" font-family="Arial" font-weight="700" fill="white">${safeSymbol || "P"}</text>
+      </svg>`;
+  } else if(shape === "additional"){
+    svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <rect width="100" height="100" fill="#e5e7eb"/>
+        <rect x="8" y="20" width="84" height="60" rx="6" fill="white" stroke="#111827" stroke-width="4"/>
+        <text x="50" y="56" text-anchor="middle" font-size="${safeSymbol.length > 8 ? 12 : 18}" font-family="Arial" font-weight="700" fill="#111">${safeSymbol || "Zusatz"}</text>
+      </svg>`;
+  } else {
+    svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <rect width="100" height="100" fill="#fff"/>
+        <rect x="8" y="8" width="84" height="84" rx="14" fill="#cbd5e1" stroke="#111827" stroke-width="4"/>
+        <text x="50" y="58" text-anchor="middle" font-size="14" font-family="Arial" font-weight="700" fill="#111">IMG</text>
+      </svg>`;
+  }
+  return svgToDataUrl(svg);
+}
+
+const defaultSigns = [
+  {
+    "code": "1",
+    "category": "Фразы",
+    "nameDe": "Einen schönen Tag noch!",
+    "nameRu": "Хорошего дня!",
+    "descDe": "",
+    "descRu": "",
+    "shape": "custom",
+    "symbol": "☀️",
+    "learned": false,
+    "image": ""
+  }
 ];
 
-let cards=[];
-let editIndex=-1;
+let dbPromise = null;
+let appData = [];
+let editIndex = null;
+let categoryOptions = [...DEFAULT_CATEGORIES];
+let modalCustomImage = "";
+let isLoadingImage = false;
+let lastSavedMessageTimer = null;
 
-function load(){
- try{
-  const saved=localStorage.getItem(KEY);
-  cards=saved?JSON.parse(saved):JSON.parse(JSON.stringify(DEFAULT));
- }catch(e){
-  cards=JSON.parse(JSON.stringify(DEFAULT));
- }
- render();
+
+function confirmDone(message){
+  try{
+    alert("✅ " + message);
+  }catch(e){}
 }
 
-function save(){
- localStorage.setItem(KEY,JSON.stringify(cards));
- render();
+function cloneData(value){
+  if(typeof structuredClone === "function") return structuredClone(value);
+  return JSON.parse(JSON.stringify(value));
 }
 
+const MAX_IMAGE_SIDE = 240;
+const TARGET_IMAGE_BYTES = 110 * 1024;
+const HARD_IMAGE_BYTES = 180 * 1024;
+
+function openDb(){
+  if(dbPromise) return dbPromise;
+  dbPromise = new Promise((resolve,reject) => {
+    if(!window.indexedDB){
+      resolve(null);
+      return;
+    }
+    const req = indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = () => {
+      const db = req.result;
+      if(!db.objectStoreNames.contains(STORE_NAME)){
+        db.createObjectStore(STORE_NAME);
+      }
+    };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error || new Error("Не удалось открыть IndexedDB."));
+  });
+  return dbPromise;
+}
+async function dbGet(key){
+  const db = await openDb();
+  if(!db) return null;
+  return new Promise((resolve,reject) => {
+    const tx = db.transaction(STORE_NAME, "readonly");
+    const req = tx.objectStore(STORE_NAME).get(key);
+    req.onsuccess = () => resolve(req.result ?? null);
+    req.onerror = () => reject(req.error || new Error("Не удалось прочитать IndexedDB."));
+  });
+}
+async function dbSet(key, value){
+  const db = await openDb();
+  if(!db) throw new Error("IndexedDB недоступна.");
+  return new Promise((resolve,reject) => {
+    const tx = db.transaction(STORE_NAME, "readwrite");
+    tx.objectStore(STORE_NAME).put(value, key);
+    tx.oncomplete = () => resolve(true);
+    tx.onerror = () => reject(tx.error || new Error("Не удалось записать IndexedDB."));
+    tx.onabort = () => reject(tx.error || new Error("Запись в IndexedDB была прервана."));
+  });
+}
+async function persistData(data){
+  try{
+    await dbSet(STORE_KEY, data);
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(_){ }
+    return true;
+  }catch(err){
+    try{
+      localStorage.setItem(KEY, JSON.stringify(data));
+      return true;
+    }catch(localErr){
+      console.error(err, localErr);
+      throw new Error("Не удалось сохранить данные. На этом устройстве не хватает памяти браузера даже после сжатия картинки.");
+    }
+  }
+}
+async function loadPersistedData(){
+  try{
+    const dbData = await dbGet(STORE_KEY);
+    if(Array.isArray(dbData) && dbData.length){
+      return dbData;
+    }
+  }catch(err){
+    console.warn(err);
+  }
+  try{
+    const v2 = JSON.parse(localStorage.getItem(KEY) || "null");
+    if(Array.isArray(v2) && v2.length){
+      await persistData(v2);
+      return v2;
+    }
+  }catch(_){ }
+  try{
+    const legacy = JSON.parse(localStorage.getItem(LEGACY_KEY) || "null");
+    if(Array.isArray(legacy) && legacy.length){
+      await persistData(legacy);
+      return legacy;
+    }
+  }catch(_){ }
+  await persistData(defaultSigns);
+  return cloneData(defaultSigns);
+}
+
+function dataUrlSizeEstimate(dataUrl){
+  if(!dataUrl || !dataUrl.startsWith("data:")) return 0;
+  const parts = dataUrl.split(",");
+  if(parts.length < 2) return 0;
+  const meta = parts[0] || "";
+  const payload = parts[1] || "";
+  if(meta.includes(";base64")) return Math.ceil((payload.length * 3) / 4);
+  return encodeURIComponent(payload).length;
+}
+function loadImageFromFile(file){
+  return new Promise((resolve,reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ""));
+    reader.onerror = () => reject(new Error("Не удалось прочитать файл картинки."));
+    reader.readAsDataURL(file);
+  });
+}
+function imageUrlToElement(src){
+  return new Promise((resolve,reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error("Не удалось обработать картинку."));
+    img.src = src;
+  });
+}
+async function compressImageDataUrl(dataUrl, maxSide = MAX_IMAGE_SIDE){
+  const img = await imageUrlToElement(dataUrl);
+  const width = img.naturalWidth || img.width;
+  const height = img.naturalHeight || img.height;
+  if(!width || !height) throw new Error("Не удалось определить размер картинки.");
+  const scale = Math.min(1, maxSide / Math.max(width, height));
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.max(1, Math.round(width * scale));
+  canvas.height = Math.max(1, Math.round(height * scale));
+  const ctx = canvas.getContext("2d", {alpha:false});
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+  let best = canvas.toDataURL("image/jpeg", 0.72);
+  const qualities = [0.65, 0.55, 0.45, 0.35];
+  if(dataUrlSizeEstimate(best) > TARGET_IMAGE_BYTES){
+    for(const q of qualities){
+      const candidate = canvas.toDataURL("image/jpeg", q);
+      best = candidate;
+      if(dataUrlSizeEstimate(candidate) <= TARGET_IMAGE_BYTES) break;
+    }
+  }
+  if(dataUrlSizeEstimate(best) > HARD_IMAGE_BYTES){
+    const smallerSide = Math.max(120, Math.round(maxSide * 0.72));
+    if(smallerSide < maxSide){
+      return compressImageDataUrl(best, smallerSide);
+    }
+  }
+  return best;
+}
+
+function categoriesFromData(data){
+  const set = new Set([...(Array.isArray(categoryOptions) ? categoryOptions : []), ...DEFAULT_CATEGORIES]);
+  (Array.isArray(data) ? data : []).forEach(x => {
+    const cat = String((x && x.category) || "").trim();
+    if(cat) set.add(cat);
+  });
+  return Array.from(set);
+}
+function fillCategorySelectors(){
+  const cats = categoriesFromData(appData);
+  const filter = document.getElementById("categoryFilter");
+  const modal = document.getElementById("signCategory");
+  const selectedFilter = filter ? (filter.value || "all") : "all";
+  const selectedModal = modal ? (modal.value || cats[0] || "") : "";
+  if(filter){
+    filter.innerHTML = `<option value="all">Все категории</option>` + cats.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
+    filter.value = cats.includes(selectedFilter) ? selectedFilter : "all";
+  }
+  if(modal){
+    modal.innerHTML = cats.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
+    modal.value = cats.includes(selectedModal) ? selectedModal : (cats[0] || "");
+  }
+}
+function updateStats(filtered){
+  const learned = appData.filter(x => x.learned).length;
+  document.getElementById("totalStat").textContent = "Всего карточек: " + appData.length;
+  document.getElementById("learnedStat").textContent = "Выучено: " + learned;
+  document.getElementById("leftStat").textContent = "Осталось: " + (appData.length - learned);
+  document.getElementById("categoriesStat").textContent = "Категорий: " + new Set(appData.map(x => x.category)).size + " | Показано: " + filtered.length;
+}
+function escapeHtml(v){
+  return String(v ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;");
+}
 function render(){
- const box=document.getElementById("cards");
- const learned=cards.filter(x=>x.learned).length;
+  fillCategorySelectors();
+  const q = document.getElementById("search").value.trim().toLowerCase();
+  const category = document.getElementById("categoryFilter").value;
+  const status = document.getElementById("statusFilter").value;
 
- document.getElementById("stats").textContent=
- "Всего карточек: "+cards.length+
- " | Выучено: "+learned+
- " | Осталось: "+(cards.length-learned);
+  const filtered = appData
+    .map((item,index) => ({...item,_index:index}))
+    .filter(item => {
+      const hay = [item.code, item.category, item.nameDe, item.nameRu, item.descDe || "", item.descRu || ""].join(" ").toLowerCase();
+      const searchOk = !q || hay.includes(q);
+      const catOk = category === "all" || item.category === category;
+      const statusOk = status === "all" || (status === "learned" && item.learned) || (status === "not_learned" && !item.learned);
+      return searchOk && catOk && statusOk;
+    })
+    .sort((a,b) => {
+      if(a.learned !== b.learned) return a.learned ? 1 : -1;
+      if(a.category !== b.category) return a.category.localeCompare(b.category,'de');
+      return (a.code || "").localeCompare(b.code || "", 'de', {numeric:true});
+    });
 
- box.innerHTML="";
+  const list = document.getElementById("list");
+  if(filtered.length === 0){
+    list.innerHTML = `<div class="empty">Ничего не найдено. Попробуйте другой запрос или добавьте новую карточку.</div>`;
+    updateStats(filtered);
+    return;
+  }
 
- cards.forEach((c,i)=>{
-  const el=document.createElement("div");
-  el.className="card";
+  list.innerHTML = filtered.map(item => `
+    <div class="card sign-card">
+      <div class="thumb">${item.image ? `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.nameDe)}" />` : `<div style="font-size:48px;line-height:1">${escapeHtml(item.symbol || "🇩🇪")}</div>`}</div>
+      <div>
+        <div class="sign-head">
+          <div>
+            <div class="title ${item.learned ? 'learned' : ''}">${escapeHtml(item.nameDe)}</div>
+            <div class="meta"><strong>RU:</strong> ${escapeHtml(item.nameRu)}</div>
+            <div class="code">Карточка ${escapeHtml(item.code || "—")}</div>
+            <div class="category">${escapeHtml(item.category)}</div>
+          </div>
+        </div>
+        <div class="meta" style="margin-top:12px"><strong>DE:</strong> ${escapeHtml(item.descDe || "—")}</div>
+        <div class="meta"><strong>RU:</strong> ${escapeHtml(item.descRu || "—")}</div>
+        <div class="actions">
+          <button class="learn" onclick="toggleLearned(${item._index})">${item.learned ? "Снять «выучил»" : "✅ Выучил"}</button>
+          <button class="edit" onclick="openEditModal(${item._index})">✏️ Редактировать</button>
+          <button class="delete" onclick="deleteSign(${item._index})">🗑 Удалить</button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+  updateStats(filtered);
+}
+function setSaveStatus(message="", isBusy=false, ok=false){
+  const status = document.getElementById("saveStatus");
+  const btn = document.getElementById("saveBtn");
+  status.textContent = message;
+  status.style.color = isBusy ? "#fde68a" : (ok ? "#86efac" : "#b8c6e3");
+  btn.disabled = isBusy;
+  btn.style.opacity = isBusy ? ".75" : "1";
+  btn.style.cursor = isBusy ? "wait" : "pointer";
+  btn.textContent = isBusy ? "⏳ Сохраняю..." : (ok ? "✅ Сохранено" : "💾 Сохранить");
+  clearTimeout(lastSavedMessageTimer);
+  if(ok && message){
+    lastSavedMessageTimer = setTimeout(() => {
+      btn.textContent = "💾 Сохранить";
+      if(status.textContent === message) status.textContent = "";
+    }, 2200);
+  }
+  if(!ok && !isBusy){
+    btn.textContent = "💾 Сохранить";
+  }
+}
+function openAddModal(){
+  editIndex = null;
+  document.getElementById("modalTitle").textContent = "Добавить карточку";
+  document.getElementById("signCode").value = "";
+  document.getElementById("signNameDe").value = "";
+  document.getElementById("signNameRu").value = "";
+  document.getElementById("signDescDe").value = "";
+  document.getElementById("signDescRu").value = "";
+  document.getElementById("imageUrl").value = "";
+  document.getElementById("imageFile").value = "";
+  document.getElementById("signShape").value = "custom";
+  document.getElementById("symbolText").value = "🇩🇪";
+  modalCustomImage = "";
+  isLoadingImage = false;
+  setSaveStatus("");
+  fillCategorySelectors();
+  document.getElementById("signCategory").value = categoryOptions[0] || "";
+  updateAutoImage();
+  document.getElementById("signModal").classList.add("open");
+}
+function openEditModal(index){
+  const item = appData[index];
+  editIndex = index;
+  document.getElementById("modalTitle").textContent = "Редактировать карточку";
+  document.getElementById("signCode").value = item.code || "";
+  document.getElementById("signNameDe").value = item.nameDe || "";
+  document.getElementById("signNameRu").value = item.nameRu || "";
+  document.getElementById("signDescDe").value = item.descDe || "";
+  document.getElementById("signDescRu").value = item.descRu || "";
+  fillCategorySelectors();
+  document.getElementById("signCategory").value = categoryOptions.includes(item.category) ? item.category : (categoryOptions[0] || "");
+  document.getElementById("signShape").value = item.shape || "custom";
+  document.getElementById("symbolText").value = item.symbol || "";
+  document.getElementById("imageUrl").value = item.image && !item.image.startsWith("data:image/svg+xml") ? item.image : "";
+  document.getElementById("imageFile").value = "";
+  modalCustomImage = item.image || "";
+  isLoadingImage = false;
+  setSaveStatus("");
+  refreshModalPreview();
+  document.getElementById("signModal").classList.add("open");
+}
+function closeModal(){
+  isLoadingImage = false;
+  document.getElementById("signModal").classList.remove("open");
+}
+function clearCustomImage(){
+  modalCustomImage = "";
+  isLoadingImage = false;
+  setSaveStatus("Своя картинка сброшена.", false);
+  document.getElementById("imageUrl").value = "";
+  document.getElementById("imageFile").value = "";
+  refreshModalPreview();
+}
+function refreshModalPreview(){
+  const urlField = document.getElementById("imageUrl").value.trim();
+  const shape = document.getElementById("signShape").value;
+  const symbol = document.getElementById("symbolText").value.trim();
+  const code = document.getElementById("signCode").value.trim();
+  const img = document.getElementById("modalPreview");
+  if(urlField || modalCustomImage){
+    img.src = urlField || modalCustomImage;
+  } else {
+    img.src = makeSignSvg(shape === "custom" ? "guide" : shape, symbol || "🇩🇪", code);
+  }
+}
+function updateAutoImage(){
+  refreshModalPreview();
+}
+async function loadModalImage(event){
+  const file = event.target.files && event.target.files[0];
+  if(!file) return;
+  isLoadingImage = true;
+  setSaveStatus("Загружаю и сжимаю картинку...", true);
+  try{
+    const rawDataUrl = await loadImageFromFile(file);
+    const compressed = await compressImageDataUrl(rawDataUrl);
+    modalCustomImage = compressed;
+    document.getElementById("imageUrl").value = "";
+    refreshModalPreview();
+    const kb = Math.max(1, Math.round(dataUrlSizeEstimate(compressed) / 1024));
+    setSaveStatus("Картинка подготовлена. Размер примерно " + kb + " КБ. Теперь нажмите «Сохранить».", false, true);
+  }catch(err){
+    setSaveStatus("Не удалось загрузить картинку.", false);
+    alert(err.message || "Не удалось обработать файл картинки.");
+  }finally{
+    isLoadingImage = false;
+  }
+}
+async function toggleLearned(index){
+  const data = cloneData(appData);
+  data[index].learned = !data[index].learned;
+  await persistData(data);
+  appData = data;
+  render();
+  confirmDone(data[index].learned ? "Карточка отмечена как выученная." : "Карточка снова отмечена как невыученная.");
+}
+async function deleteSign(index){
+  if(!confirm("Удалить эту карточку?")) return;
+  const data = cloneData(appData);
+  data.splice(index,1);
+  await persistData(data);
+  appData = data;
+  render();
+  confirmDone("Карточка удалена.");
+}
+async function saveCurrentSign(){
+  if(isLoadingImage){
+    alert("Подождите, картинка ещё загружается.");
+    return;
+  }
+  const code = document.getElementById("signCode").value.trim();
+  const category = document.getElementById("signCategory").value.trim();
+  const nameDe = document.getElementById("signNameDe").value.trim();
+  const nameRu = document.getElementById("signNameRu").value.trim();
+  const descDe = document.getElementById("signDescDe").value.trim();
+  const descRu = document.getElementById("signDescRu").value.trim();
+  const shape = document.getElementById("signShape").value;
+  const symbol = document.getElementById("symbolText").value.trim();
+  let imageUrl = document.getElementById("imageUrl").value.trim();
 
-  const de=document.createElement("div");
-  de.className="de";
-  de.textContent=c.de;
+  if(!code){
+    alert("Заполните минимум номер карточки.");
+    return;
+  }
 
-  const ru=document.createElement("div");
-  ru.className="ru";
-  ru.textContent=c.ru;
+  setSaveStatus("Сохраняю...", true);
+  try{
+    if(imageUrl && !imageUrl.startsWith("data:")){
+      // ссылка оставляется как есть
+    } else if(imageUrl && imageUrl.startsWith("data:")){
+      imageUrl = await compressImageDataUrl(imageUrl);
+    }
+    const wasNewCard = editIndex === null;
+    const sign = {
+      code, category, nameDe, nameRu, descDe, descRu, shape, symbol,
+      learned: editIndex === null ? false : Boolean(appData[editIndex]?.learned),
+      image: imageUrl || modalCustomImage || makeSignSvg(shape, symbol, code)
+    };
+    const data = cloneData(appData);
+    if(editIndex === null){
+      data.unshift(sign);
+    } else {
+      data[editIndex] = sign;
+    }
+    await persistData(data);
+    appData = data;
+    render();
+    closeModal();
+    setSaveStatus("Сохранено.", false, true);
+    confirmDone(wasNewCard ? "Новая карточка добавлена." : "Изменения сохранены.");
+  }catch(err){
+    setSaveStatus(err.message || "Не удалось сохранить.", false);
+    alert(err.message || "Не удалось сохранить.");
+  }
+}
+async function resetToDefault(){
+  if(!confirm("Сбросить приложение до 1 стартовой карточки?")) return;
+  const data = cloneData(defaultSigns).slice(0, 1).map((s, i) => ({
+    ...s,
+    id: i + 1,
+    learned: false,
+    image: s.image || makeSignSvg(s.shape || "custom", s.symbol || "🇩🇪", s.code || ("N" + (i + 1)))
+  }));
+  try{
+    await persistData(data);
+    appData = data;
+    try{ localStorage.setItem(LS_KEY, JSON.stringify(data)); }catch(e){}
+    render();
+    confirmDone("Сброс выполнен. Сейчас в приложении 1 стартовая карточка.");
+  }catch(err){
+    alert("Не удалось выполнить сброс: " + (err.message || err));
+  }
+}
+function downloadTextFile(content, filename, mimeType){
+  try{
+    const blob = new Blob([content], {type:mimeType || "text/plain;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.style.display = "none";
+    document.body.appendChild(a);
 
-  const buttons=document.createElement("div");
-  buttons.className="row";
+    // Android/Chrome, especially when the app is opened as file://, may ignore
+    // the download attribute. Dispatching a real MouseEvent works more reliably
+    // than only calling a.click().
+    a.dispatchEvent(new MouseEvent("click", {bubbles:true, cancelable:true, view:window}));
 
-  const learn=document.createElement("button");
-  learn.className="green";
-  learn.textContent=c.learned?"↩️ Не выучил":"✅ Выучил";
-  learn.onclick=()=>toggleLearn(i);
-
-  const edit=document.createElement("button");
-  edit.className="orange";
-  edit.textContent="✏️ Редактировать";
-  edit.onclick=()=>editCard(i);
-
-  const del=document.createElement("button");
-  del.className="red";
-  del.textContent="🗑 Удалить";
-  del.onclick=()=>deleteCard(i);
-
-  buttons.append(learn,edit,del);
-  el.append(de,ru,buttons);
-  box.appendChild(el);
- });
+    setTimeout(() => {
+      try{ URL.revokeObjectURL(url); }catch(e){}
+      try{ a.remove(); }catch(e){}
+    }, 4000);
+    return true;
+  }catch(e){
+    console.error("Download failed", e);
+    return false;
+  }
 }
 
-function showAdd(){
- editIndex=-1;
- document.getElementById("deInput").value="";
- document.getElementById("ruInput").value="";
- document.getElementById("form").classList.remove("hidden");
- document.getElementById("deInput").focus();
+function showTextExportFallback(content, filename){
+  let box = document.getElementById("txtExportFallbackBox");
+  if(!box){
+    box = document.createElement("div");
+    box.id = "txtExportFallbackBox";
+    box.className = "card";
+    box.style.cssText = "margin-top:14px;padding:14px";
+    box.innerHTML = `
+      <h3 style="margin-bottom:10px">TXT экспорт</h3>
+      <div class="small" style="margin-bottom:8px">Если файл не скачался автоматически, скопируйте текст ниже и сохраните его как .txt.</div>
+      <textarea id="txtExportFallbackArea" style="min-height:220px"></textarea>
+      <div class="top-actions" style="margin-top:10px">
+        <button class="violet" onclick="copyTxtExportFallback()">📋 Скопировать TXT</button>
+        <button class="ghost" onclick="document.getElementById('txtExportFallbackBox').remove()">Закрыть</button>
+      </div>
+      <div id="txtExportFallbackStatus" class="small" style="margin-top:8px"></div>
+    `;
+    const toolbar = document.querySelector(".toolbar");
+    toolbar.appendChild(box);
+  }
+  const area = document.getElementById("txtExportFallbackArea");
+  area.value = content;
+  area.focus();
+  area.select();
+  const status = document.getElementById("txtExportFallbackStatus");
+  if(status) status.textContent = "Файл: " + filename + " | строк: " + content.split(/\r?\n/).length;
 }
 
-function closeForm(){
- document.getElementById("form").classList.add("hidden");
+async function copyTxtExportFallback(){
+  const area = document.getElementById("txtExportFallbackArea");
+  if(!area) return;
+  try{
+    await navigator.clipboard.writeText(area.value);
+    document.getElementById("txtExportFallbackStatus").textContent = "TXT скопирован в буфер обмена.";
+  }catch(e){
+    area.focus();
+    area.select();
+    document.execCommand("copy");
+    document.getElementById("txtExportFallbackStatus").textContent = "TXT выделен. Если не скопировался автоматически — нажмите Копировать на клавиатуре.";
+  }
 }
 
-function saveCard(){
- const de=document.getElementById("deInput").value.trim();
- const ru=document.getElementById("ruInput").value.trim();
-
- if(!de || !ru){
-  alert("Введите немецкий текст и перевод.");
-  return;
- }
-
- if(editIndex>=0){
-  cards[editIndex].de=de;
-  cards[editIndex].ru=ru;
- }else{
-  cards.push({de:de,ru:ru,learned:false});
- }
-
- closeForm();
- save();
+function showJsonExportFallback(content, filename){
+  let box = document.getElementById("jsonExportFallbackBox");
+  if(!box){
+    box = document.createElement("div");
+    box.id = "jsonExportFallbackBox";
+    box.className = "card";
+    box.style.cssText = "margin-top:14px;padding:14px";
+    box.innerHTML = `
+      <h3 style="margin-bottom:10px">JSON экспорт</h3>
+      <div class="small" style="margin-bottom:8px">Если файл не скачался автоматически, скопируйте JSON ниже и сохраните его как .json.</div>
+      <textarea id="jsonExportFallbackArea" style="min-height:220px"></textarea>
+      <div class="top-actions" style="margin-top:10px">
+        <button class="violet" onclick="copyJsonExportFallback()">📋 Скопировать JSON</button>
+        <button class="ghost" onclick="document.getElementById('jsonExportFallbackBox').remove()">Закрыть</button>
+      </div>
+      <div id="jsonExportFallbackStatus" class="small" style="margin-top:8px"></div>
+    `;
+    const toolbar = document.querySelector(".toolbar");
+    toolbar.appendChild(box);
+  }
+  const area = document.getElementById("jsonExportFallbackArea");
+  area.value = content;
+  area.focus();
+  area.select();
+  const status = document.getElementById("jsonExportFallbackStatus");
+  if(status) status.textContent = "Файл: " + filename + " | карточек: " + (Array.isArray(appData) ? appData.length : 0);
 }
 
-function editCard(i){
- editIndex=i;
- document.getElementById("deInput").value=cards[i].de;
- document.getElementById("ruInput").value=cards[i].ru;
- document.getElementById("form").classList.remove("hidden");
+async function copyJsonExportFallback(){
+  const area = document.getElementById("jsonExportFallbackArea");
+  if(!area) return;
+  try{
+    await navigator.clipboard.writeText(area.value);
+    document.getElementById("jsonExportFallbackStatus").textContent = "JSON скопирован в буфер обмена.";
+  }catch(e){
+    area.focus();
+    area.select();
+    document.execCommand("copy");
+    document.getElementById("jsonExportFallbackStatus").textContent = "JSON выделен. Если не скопировался автоматически — нажмите Копировать на клавиатуре.";
+  }
 }
 
-function deleteCard(i){
- if(confirm("Удалить эту карточку?")){
-  cards.splice(i,1);
-  save();
- }
+function exportData(){
+  let fileName = prompt("Введите название файла", "deutsch-app-export.json");
+
+  if(fileName === null) return;
+
+  fileName = fileName.trim();
+
+  if(!fileName){
+    alert("Название файла не введено.");
+    return;
+  }
+
+  if(!fileName.toLowerCase().endsWith(".json")){
+    fileName += ".json";
+  }
+
+  const dataStr = JSON.stringify(appData, null, 2);
+  const blob = new Blob([dataStr], {type:"application/json"});
+
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = fileName;
+
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+
+  confirmDone("JSON экспортирован: " + fileName);
 }
 
-function toggleLearn(i){
- cards[i].learned=!cards[i].learned;
- save();
+function cleanTxtField(value){
+  return String(value || "")
+    .replace(/\r?\n/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+function txtExportLine(item){
+  return [
+    cleanTxtField(item.nameDe),
+    cleanTxtField(item.nameRu),
+    cleanTxtField(item.descDe),
+    cleanTxtField(item.descRu),
+    cleanTxtField(item.category)
+  ].join(" | ");
+}
+function exportTxtData(){
+  let fileName = prompt("Введите название TXT файла", "deutsch-app-export.txt");
+
+  if(fileName === null) return;
+
+  fileName = fileName.trim();
+
+  if(!fileName){
+    alert("Название файла не введено.");
+    return;
+  }
+
+  if(!fileName.toLowerCase().endsWith(".txt")){
+    fileName += ".txt";
+  }
+
+  const lines = appData.map(item => {
+    return [
+      item.nameDe || "",
+      item.nameRu || "",
+      item.descDe || "",
+      item.descRu || "",
+      item.category || ""
+    ].join(" | ");
+  });
+
+  const txtContent = lines.join("\n");
+
+  const blob = new Blob([txtContent], {type:"text/plain;charset=utf-8"});
+
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = fileName;
+
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+
+  confirmDone("TXT экспортирован: " + fileName);
+}
+function extractJsonCards(parsed){
+  if(Array.isArray(parsed)) return parsed;
+  if(parsed && typeof parsed === "object"){
+    const possibleKeys = ["appData", "cards", "data", "signs", "words", "items"];
+    for(const key of possibleKeys){
+      if(Array.isArray(parsed[key])) return parsed[key];
+    }
+  }
+  throw new Error("Файл должен содержать массив карточек или объект с полем appData/cards/data.");
+}
+function normalizeJsonCard(raw, index){
+  raw = raw && typeof raw === "object" ? raw : {};
+  const code = String(raw.code || raw.id || ("JSON" + (index + 1))).trim();
+  const category = String(raw.category || raw.type || "Импорт JSON").trim() || "Импорт JSON";
+  const nameDe = String(raw.nameDe || raw.de || raw.german || raw.word || raw.title || "").trim();
+  const nameRu = String(raw.nameRu || raw.ru || raw.russian || raw.translation || raw.meaning || "").trim();
+  const descDe = String(raw.descDe || raw.deExample || raw.exampleDe || raw.example_de || raw.sentenceDe || raw.example || "").trim();
+  const descRu = String(raw.descRu || raw.ruExample || raw.exampleRu || raw.example_ru || raw.sentenceRu || "").trim();
+  const shape = String(raw.shape || "custom").trim() || "custom";
+  const symbol = String(raw.symbol || (category.toLowerCase().includes("фраз") ? "💬" : "📄")).trim() || "📄";
+  const image = String(raw.image || "").trim();
+  return {
+    code,
+    category,
+    nameDe,
+    nameRu,
+    descDe,
+    descRu,
+    shape,
+    symbol,
+    learned: Boolean(raw.learned),
+    image: image || makeSignSvg(shape, symbol, code)
+  };
 }
 
-function resetCards(){
- if(confirm("Удалить все карточки и оставить только одну стартовую?")){
-  cards=JSON.parse(JSON.stringify(DEFAULT));
-  save();
- }
+function normalizeImportedJsonData(parsed){
+  const items = extractJsonCards(parsed);
+  return items
+    .map((x, i) => normalizeJsonCard(x, i))
+    .filter(x => x.nameDe || x.nameRu || x.descDe || x.descRu);
 }
 
-load();
+async function saveImportedCards(items, replaceExisting){
+  if(!Array.isArray(items) || items.length === 0){
+    alert("В JSON не найдено карточек.");
+    return;
+  }
+  const normalizedItems = items.map((x, i) => ({
+    ...normalizeJsonCard(x, i),
+    code: String(x.code || x.id || ("JSON" + (i + 1))).trim() || ("JSON" + (i + 1))
+  }));
+
+  const fingerprints = new Set((replaceExisting ? [] : appData).map(importedFingerprint));
+  const uniqueItems = [];
+  normalizedItems.forEach(card => {
+    const fingerprint = importedFingerprint(card);
+    if(replaceExisting || !fingerprints.has(fingerprint)){
+      fingerprints.add(fingerprint);
+      uniqueItems.push(card);
+    }
+  });
+
+  if(!uniqueItems.length){
+    alert("Все карточки из JSON уже есть в приложении.");
+    return;
+  }
+
+  const data = replaceExisting ? uniqueItems : [...uniqueItems, ...cloneData(appData)];
+  const mergedCategories = [...new Set([...categoryOptions, ...data.map(card => card.category).filter(Boolean)])];
+  await persistData(data);
+  persistCategories(mergedCategories);
+  appData = data;
+  fillCategorySelectors();
+  render();
+  alert((replaceExisting ? "JSON импортирован. Карточек: " : "JSON импортирован. Добавлено карточек: ") + uniqueItems.length);
+}
+
+async function importParsedJson(parsed){
+  const items = normalizeImportedJsonData(parsed);
+  const replaceExisting = confirm("Заменить текущие карточки?\nOK — заменить, Отмена — добавить к существующим.");
+  await saveImportedCards(items, replaceExisting);
+}
+
+function importData(event){
+  const file = event.target.files && event.target.files[0];
+  if(!file){
+    alert("Файл не выбран. На телефоне откройте «Мои файлы» или «Диск» и выберите JSON.");
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = async function(e){
+    try{
+      const text = String(e.target.result || "").trim();
+      if(!text){
+        alert("Файл пустой.");
+        return;
+      }
+      const parsed = JSON.parse(text);
+      await importParsedJson(parsed);
+    }catch(err){
+      console.error(err);
+      alert("Не удалось импортировать JSON: " + (err.message || "проверьте файл .json с карточками."));
+    }finally{
+      event.target.value = "";
+    }
+  };
+  reader.onerror = function(){
+    alert("Не удалось прочитать файл.");
+    event.target.value = "";
+  };
+  reader.readAsText(file, "UTF-8");
+}
+
+function toggleManualJsonImport(){
+  const box = document.getElementById("manualJsonImportBox");
+  if(box) box.classList.toggle("hidden");
+}
+
+async function importJsonFromText(){
+  const ta = document.getElementById("manualJsonInput");
+  const status = document.getElementById("manualJsonStatus");
+  try{
+    const text = String(ta.value || "").trim();
+    if(!text){
+      alert("Сначала вставьте JSON текстом.");
+      return;
+    }
+    const parsed = JSON.parse(text);
+    await importParsedJson(parsed);
+    if(status) status.textContent = "JSON импортирован.";
+  }catch(err){
+    console.error(err);
+    if(status) status.textContent = "Ошибка: " + (err.message || "JSON не распознан.");
+    alert("Ошибка импорта JSON: " + (err.message || "JSON не распознан."));
+  }
+}
+
+function normalizeImportedText(value){
+  return String(value || "").replace(/\uFEFF/g, "").replace(/\r/g, "").trim();
+}
+function inferTxtCategory(nameDe, explicitCategory=""){
+  const given = normalizeImportedText(explicitCategory);
+  if(given) return given;
+  const source = normalizeImportedText(nameDe);
+  if(!source) return "Импорт TXT";
+  const wordCount = source.split(/\s+/).filter(Boolean).length;
+  return /[.!?]/.test(source) || wordCount >= 3 ? "Фразы" : "Импорт TXT";
+}
+function inferTxtSymbol(category, nameDe){
+  const source = normalizeImportedText(nameDe);
+  const cat = normalizeImportedText(category).toLowerCase();
+  return cat.includes("фраз") || /[.!?]/.test(source) || source.split(/\s+/).filter(Boolean).length >= 3 ? "💬" : "📄";
+}
+function nextImportedCode(existingData, prefix="TXT"){
+  const used = new Set((existingData || []).map(item => String(item && item.code || "").toUpperCase()));
+  let index = 1;
+  while(used.has((prefix + index).toUpperCase())) index += 1;
+  return prefix + index;
+}
+function importedFingerprint(item){
+  return [item.category, item.nameDe, item.nameRu, item.descDe, item.descRu].map(v => normalizeImportedText(v).toLowerCase()).join("¦");
+}
+function makeImportedCard(raw, existingData){
+  const nameDe = normalizeImportedText(raw.nameDe);
+  const nameRu = normalizeImportedText(raw.nameRu);
+  const descDe = normalizeImportedText(raw.descDe);
+  const descRu = normalizeImportedText(raw.descRu);
+  const category = inferTxtCategory(nameDe, raw.category);
+  if(!nameDe && !nameRu && !descDe && !descRu) return null;
+  const symbol = inferTxtSymbol(category, nameDe || descDe);
+  return {
+    code: nextImportedCode(existingData, "TXT"),
+    category,
+    nameDe: nameDe || descDe || nameRu || "Без названия",
+    nameRu,
+    descDe,
+    descRu,
+    shape: "guide",
+    symbol,
+    learned: false,
+    image: makeSignSvg("guide", symbol, "TXT")
+  };
+}
+function parseLabeledTxtBlocks(text){
+  const blocks = normalizeImportedText(text).split(/\n\s*\n+/).map(part => part.trim()).filter(Boolean);
+  const parsed = [];
+  blocks.forEach(block => {
+    const card = {nameDe:"", nameRu:"", descDe:"", descRu:"", category:""};
+    block.split("\n").map(line => line.trim()).filter(Boolean).forEach(line => {
+      const match = line.match(/^([^:]+):\s*(.*)$/);
+      if(!match) return;
+      const label = match[1].trim().toLowerCase();
+      const value = match[2].trim();
+      if(!value) return;
+      if(["de", "deutsch", "german", "wort", "word", "phrase", "satz"].includes(label)) card.nameDe = value;
+      else if(["ru", "russisch", "russian", "перевод"].includes(label)) card.nameRu = value;
+      else if(["de beispiel", "beispiel", "beispiel de", "de satz", "satz de", "example de", "sentence de"].includes(label)) card.descDe = value;
+      else if(["ru beispiel", "пример", "пример ru", "ru satz", "satz ru", "example ru", "sentence ru"].includes(label)) card.descRu = value;
+      else if(["category", "kategorie", "категория"].includes(label)) card.category = value;
+    });
+    if(card.nameDe || card.nameRu || card.descDe || card.descRu) parsed.push(card);
+  });
+  return parsed;
+}
+function parseDelimitedTxtLines(text){
+  const result = [];
+  const lines = normalizeImportedText(text).split("\n");
+  lines.forEach(line => {
+    const raw = line.trim();
+    if(!raw || raw.startsWith("#") || raw.startsWith("//")) return;
+    let parts = [];
+    let delimiter = "";
+    if(raw.includes("|")) delimiter = "|";
+    else if(raw.includes("\t")) delimiter = "\t";
+    else if(raw.includes(";")) delimiter = ";";
+    if(delimiter){
+      parts = raw.split(delimiter).map(x => x.trim());
+    }else{
+      const dashMatch = raw.match(/\s+[—–-]\s+/);
+      if(dashMatch){
+        parts = raw.split(/\s+[—–-]\s+/, 2).map(x => x.trim());
+      } else {
+        parts = [raw];
+      }
+    }
+    parts = parts.filter((_, idx) => idx < 5);
+    if(parts.length === 1){
+      result.push({nameDe: parts[0], category: inferTxtCategory(parts[0])});
+    } else if(parts.length === 2){
+      result.push({nameDe: parts[0], nameRu: parts[1], category: inferTxtCategory(parts[0])});
+    } else if(parts.length === 3){
+      const thirdLooksCategory = !/[.!?]/.test(parts[2]) && parts[2].split(/\s+/).filter(Boolean).length <= 4;
+      result.push(thirdLooksCategory
+        ? {nameDe: parts[0], nameRu: parts[1], category: parts[2]}
+        : {nameDe: parts[0], nameRu: parts[1], descDe: parts[2], category: inferTxtCategory(parts[0])}
+      );
+    } else if(parts.length === 4){
+      result.push({nameDe: parts[0], nameRu: parts[1], descDe: parts[2], descRu: parts[3], category: inferTxtCategory(parts[0])});
+    } else if(parts.length >= 5){
+      result.push({nameDe: parts[0], nameRu: parts[1], descDe: parts[2], descRu: parts[3], category: parts[4]});
+    }
+  });
+  return result;
+}
+function parseTxtCards(text){
+  const normalized = normalizeImportedText(text);
+  if(!normalized) throw new Error("TXT-файл пустой.");
+  const hasLabels = /(^|\n)\s*(de|deutsch|german|ru|russian|перевод|category|kategorie|категория)\s*:/i.test(normalized);
+  const rawCards = hasLabels ? parseLabeledTxtBlocks(normalized) : parseDelimitedTxtLines(normalized);
+  const cards = [];
+  rawCards.forEach(raw => {
+    const card = makeImportedCard(raw, [...appData, ...cards]);
+    if(card) cards.push(card);
+  });
+  return cards;
+}
+async function importTxtData(event){
+  const file = event.target.files && event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = async () => {
+    try{
+      setSaveStatus("Читаю TXT и подготавливаю карточки...", true);
+      const parsedCards = parseTxtCards(reader.result);
+      if(!parsedCards.length) throw new Error("Не удалось распознать ни одной карточки.");
+      const fingerprints = new Set(appData.map(importedFingerprint));
+      const newCards = [];
+      parsedCards.forEach(card => {
+        const fingerprint = importedFingerprint(card);
+        if(!fingerprints.has(fingerprint)){
+          fingerprints.add(fingerprint);
+          newCards.push(card);
+        }
+      });
+      if(!newCards.length) throw new Error("Все карточки из TXT уже есть в приложении.");
+      const data = [...newCards, ...cloneData(appData)];
+      const mergedCategories = [...new Set([...categoryOptions, ...newCards.map(card => card.category).filter(Boolean)])];
+      await persistData(data);
+      categoryOptions = mergedCategories;
+      persistCategories(mergedCategories);
+      appData = data;
+      render();
+      setSaveStatus(`TXT импортирован: добавлено ${newCards.length} карточек.`, false, true);
+      alert(`TXT импортирован. Добавлено карточек: ${newCards.length}.`);
+    }catch(err){
+      setSaveStatus("", false);
+      alert("Не удалось импортировать TXT: " + err.message);
+    }
+  };
+  reader.readAsText(file, "utf-8");
+  event.target.value = "";
+}
+window.addEventListener("keydown", (e) => {
+  if(e.key === "Escape") closeModal();
+});
+document.getElementById("signModal").addEventListener("click", (e) => {
+  if(e.target.id === "signModal") closeModal();
+});
+
+
+function toggleHeaderEditor(){
+  const box = document.getElementById("headerEditor");
+  box.classList.toggle("hidden");
+  if(!box.classList.contains("hidden")){
+    document.getElementById("headerInput").value = document.getElementById("appMainTitle").textContent;
+    document.getElementById("subHeaderInput").value = document.getElementById("appSubTitle").textContent;
+  }
+}
+
+function saveHeader(){
+  const btn = document.getElementById("saveHeaderBtn");
+  const status = document.getElementById("headerStatus");
+  btn.textContent = "⏳ Сохраняю...";
+  btn.disabled = true;
+
+  const h = document.getElementById("headerInput").value;
+  const sub = document.getElementById("subHeaderInput").value;
+
+  document.getElementById("appMainTitle").textContent = h;
+  document.getElementById("appSubTitle").textContent = sub;
+
+  localStorage.setItem("app_header", JSON.stringify({h, sub}));
+
+  setTimeout(()=>{
+    btn.textContent = "✅ Сохранено";
+    btn.disabled = false;
+    status.textContent = "Сохранено";
+    confirmDone("Заголовок сохранён.");
+  },800);
+}
+
+function loadHeader(){
+  try{
+    const saved = JSON.parse(localStorage.getItem("app_header"));
+    if(saved){
+      document.getElementById("appMainTitle").textContent = saved.h;
+      document.getElementById("appSubTitle").textContent = saved.sub;
+    }
+  }catch(e){}
+}
+
+(async function init(){
+  try{
+    categoryOptions = loadPersistedCategories();
+    fillCategorySelectors();
+    appData = await loadPersistedData();
+    render();
+  }catch(err){
+    console.error(err);
+    appData = cloneData(defaultSigns);
+    render();
+    alert("Не удалось открыть сохранённые данные. Загружен стартовый набор.");
+  }
+})();
+
+function downloadApp(){
+  const name = document.getElementById("appName").value.trim() || "verkehrszeichen_app";
+  let html = document.documentElement.outerHTML;
+  html = html.replace(/<h1 id="appMainTitle">.*?<\/h1>/,
+    '<h1 id="appMainTitle">' + document.getElementById("appMainTitle").textContent + '</h1>');
+  html = html.replace(/<div class="sub" id="appSubTitle">.*?<\/div>/,
+    '<div class="sub" id="appSubTitle">' + document.getElementById("appSubTitle").textContent + '</div>');
+
+  html = html.replace(
+    /const ORIGINAL_DEFAULT_CATEGORIES = \[[\s\S]*?\];\nconst DEFAULT_CATEGORIES = \[\.\.\.ORIGINAL_DEFAULT_CATEGORIES\];/,
+    "const ORIGINAL_DEFAULT_CATEGORIES = " + JSON.stringify(categoryOptions, null, 2) + ";\nconst DEFAULT_CATEGORIES = [...ORIGINAL_DEFAULT_CATEGORIES];"
+  );
+  html = html.replace(
+    /const defaultSigns = \[\s\S]*?;\n\nlet dbPromise = null;/,
+    "const defaultSigns = " + JSON.stringify(appData, null, 2) + ";\n\nlet dbPromise = null;"
+  );
+  const blob = new Blob(["<!DOCTYPE html>\n" + html], {type:"text/html"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name + ".html";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
 </script>
 
-</body>
-</html>
+
+</body></html>

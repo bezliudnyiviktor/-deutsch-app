@@ -226,7 +226,7 @@ button.ghost{
       <div class="stat" id="categoriesStat">Категорий: 1 | Показано: 1</div>
     </div>
 
-    <div id="headerEditor" class="card" style="margin-top:14px;padding:14px">
+    <div id="headerEditor" class="card hidden" style="margin-top:14px;padding:14px">
       <h3 style="margin-bottom:10px">Редактирование заголовка</h3>
       <input id="headerInput" placeholder="Введите заголовок" style="margin-bottom:10px">
       <input id="subHeaderInput" placeholder="Введите подзаголовок">
@@ -1188,6 +1188,50 @@ async function resetToDefault(){
     alert("Не удалось выполнить сброс: " + (err.message || err));
   }
 }
+function isAppleMobile(){
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+
+async function shareOrDownloadContent(content, filename, mimeType){
+  const type = mimeType || "application/octet-stream";
+  const blob = content instanceof Blob ? content : new Blob([content], {type});
+
+  // iPhone/iPad: use the native Share sheet. It contains “Save to Files”.
+  if(isAppleMobile() && navigator.share && typeof File !== "undefined"){
+    try{
+      const file = new File([blob], filename, {type});
+      const payload = {files:[file], title:filename};
+      if(!navigator.canShare || navigator.canShare(payload)){
+        await navigator.share(payload);
+        return "shared";
+      }
+    }catch(err){
+      if(err && err.name === "AbortError") return "cancelled";
+      console.warn("Share failed", err);
+    }
+  }
+
+  // Android/Desktop and fallback.
+  try{
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      try{ a.remove(); }catch(e){}
+      try{ URL.revokeObjectURL(url); }catch(e){}
+    }, 60000);
+    return "downloaded";
+  }catch(err){
+    console.error("Download failed", err);
+    return "failed";
+  }
+}
+
 function downloadTextFile(content, filename, mimeType){
   try{
     const blob = new Blob([content], {type:mimeType || "text/plain;charset=utf-8"});
@@ -1298,36 +1342,17 @@ async function copyJsonExportFallback(){
   }
 }
 
-function exportData(){
+async function exportData(){
   let fileName = prompt("Введите название файла", "deutsch-app-export.json");
-
   if(fileName === null) return;
-
   fileName = fileName.trim();
-
-  if(!fileName){
-    alert("Название файла не введено.");
-    return;
-  }
-
-  if(!fileName.toLowerCase().endsWith(".json")){
-    fileName += ".json";
-  }
+  if(!fileName){ alert("Название файла не введено."); return; }
+  if(!fileName.toLowerCase().endsWith(".json")) fileName += ".json";
 
   const dataStr = JSON.stringify(appData, null, 2);
-  const blob = new Blob([dataStr], {type:"application/json"});
-
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = fileName;
-
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-
-  setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
-
-  confirmDone("JSON экспортирован: " + fileName);
+  const result = await shareOrDownloadContent(dataStr, fileName, "application/json;charset=utf-8");
+  if(result === "failed") showJsonExportFallback(dataStr, fileName);
+  else if(result !== "cancelled") confirmDone(isAppleMobile() ? "Выберите «Сохранить в Файлы» в меню iPhone." : "JSON экспортирован: " + fileName);
 }
 
 function cleanTxtField(value){
@@ -1345,47 +1370,20 @@ function txtExportLine(item){
     cleanTxtField(item.category)
   ].join(" | ");
 }
-function exportTxtData(){
+async function exportTxtData(){
   let fileName = prompt("Введите название TXT файла", "deutsch-app-export.txt");
-
   if(fileName === null) return;
-
   fileName = fileName.trim();
+  if(!fileName){ alert("Название файла не введено."); return; }
+  if(!fileName.toLowerCase().endsWith(".txt")) fileName += ".txt";
 
-  if(!fileName){
-    alert("Название файла не введено.");
-    return;
-  }
+  const txtContent = appData.map(item => [
+    item.nameDe || "", item.nameRu || "", item.descDe || "", item.descRu || "", item.category || ""
+  ].join(" | ")).join("\n");
 
-  if(!fileName.toLowerCase().endsWith(".txt")){
-    fileName += ".txt";
-  }
-
-  const lines = appData.map(item => {
-    return [
-      item.nameDe || "",
-      item.nameRu || "",
-      item.descDe || "",
-      item.descRu || "",
-      item.category || ""
-    ].join(" | ");
-  });
-
-  const txtContent = lines.join("\n");
-
-  const blob = new Blob([txtContent], {type:"text/plain;charset=utf-8"});
-
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = fileName;
-
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-
-  setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
-
-  confirmDone("TXT экспортирован: " + fileName);
+  const result = await shareOrDownloadContent(txtContent, fileName, "text/plain;charset=utf-8");
+  if(result === "failed") showTextExportFallback(txtContent, fileName);
+  else if(result !== "cancelled") confirmDone(isAppleMobile() ? "Выберите «Сохранить в Файлы» в меню iPhone." : "TXT экспортирован: " + fileName);
 }
 function extractJsonCards(parsed){
   if(Array.isArray(parsed)) return parsed;
@@ -1689,33 +1687,46 @@ document.getElementById("signModal").addEventListener("click", (e) => {
 
 function toggleHeaderEditor(){
   const box = document.getElementById("headerEditor");
+  if(!box) return;
   box.classList.toggle("hidden");
   if(!box.classList.contains("hidden")){
-    document.getElementById("headerInput").value = document.getElementById("appMainTitle").textContent;
-    document.getElementById("subHeaderInput").value = document.getElementById("appSubTitle").textContent;
+    const hInput = document.getElementById("headerInput");
+    const subInput = document.getElementById("subHeaderInput");
+    hInput.value = document.getElementById("appMainTitle").textContent || "";
+    subInput.value = document.getElementById("appSubTitle").textContent || "";
+    setTimeout(() => {
+      try{ box.scrollIntoView({behavior:"smooth", block:"center"}); }catch(e){}
+      try{ hInput.focus(); }catch(e){}
+    }, 50);
   }
 }
 
 function saveHeader(){
   const btn = document.getElementById("saveHeaderBtn");
   const status = document.getElementById("headerStatus");
-  btn.textContent = "⏳ Сохраняю...";
-  btn.disabled = true;
+  const h = document.getElementById("headerInput").value.trim();
+  const sub = document.getElementById("subHeaderInput").value.trim();
 
-  const h = document.getElementById("headerInput").value;
-  const sub = document.getElementById("subHeaderInput").value;
+  if(!h){
+    alert("Введите заголовок.");
+    return;
+  }
 
-  document.getElementById("appMainTitle").textContent = h;
-  document.getElementById("appSubTitle").textContent = sub;
-
-  localStorage.setItem("app_header", JSON.stringify({h, sub}));
-
-  setTimeout(()=>{
-    btn.textContent = "✅ Сохранено";
-    btn.disabled = false;
-    status.textContent = "Сохранено";
+  try{
+    if(btn){ btn.textContent = "⏳ Сохраняю..."; btn.disabled = true; }
+    document.getElementById("appMainTitle").textContent = h;
+    document.getElementById("appSubTitle").textContent = sub;
+    document.title = h;
+    localStorage.setItem("app_header", JSON.stringify({h, sub}));
+    if(status){ status.textContent = "Заголовок сохранён."; status.style.color = "#86efac"; }
+    if(btn){ btn.textContent = "✅ Сохранено"; btn.disabled = false; }
     confirmDone("Заголовок сохранён.");
-  },800);
+  }catch(err){
+    console.error(err);
+    if(btn){ btn.textContent = "💾 Сохранить"; btn.disabled = false; }
+    if(status){ status.textContent = "Ошибка сохранения."; status.style.color = "#fca5a5"; }
+    alert("Не удалось сохранить заголовок: " + (err.message || err));
+  }
 }
 
 function loadHeader(){
@@ -1742,28 +1753,32 @@ function loadHeader(){
   }
 })();
 
-function downloadApp(){
-  const name = document.getElementById("appName").value.trim() || "verkehrszeichen_app";
+async function downloadApp(){
+  const rawName = document.getElementById("appName").value.trim() || "deutsch_app";
+  const safeName = rawName.replace(/[\\/:*?"<>|]+/g, "_");
+  const fileName = /\.html?$/i.test(safeName) ? safeName : safeName + ".html";
+
   let html = document.documentElement.outerHTML;
   html = html.replace(/<h1 id="appMainTitle">.*?<\/h1>/,
     '<h1 id="appMainTitle">' + document.getElementById("appMainTitle").textContent + '</h1>');
   html = html.replace(/<div class="sub" id="appSubTitle">.*?<\/div>/,
     '<div class="sub" id="appSubTitle">' + document.getElementById("appSubTitle").textContent + '</div>');
-
   html = html.replace(
     /const ORIGINAL_DEFAULT_CATEGORIES = \[[\s\S]*?\];\nconst DEFAULT_CATEGORIES = \[\.\.\.ORIGINAL_DEFAULT_CATEGORIES\];/,
     "const ORIGINAL_DEFAULT_CATEGORIES = " + JSON.stringify(categoryOptions, null, 2) + ";\nconst DEFAULT_CATEGORIES = [...ORIGINAL_DEFAULT_CATEGORIES];"
   );
   html = html.replace(
-    /const defaultSigns = \[\s\S]*?;\n\nlet dbPromise = null;/,
+    /const defaultSigns = \[[\s\S]*?;\n\nlet dbPromise = null;/,
     "const defaultSigns = " + JSON.stringify(appData, null, 2) + ";\n\nlet dbPromise = null;"
   );
-  const blob = new Blob(["<!DOCTYPE html>\n" + html], {type:"text/html"});
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = name + ".html";
-  a.click();
-  URL.revokeObjectURL(a.href);
+
+  const fullHtml = "<!DOCTYPE html>\n" + html;
+  const result = await shareOrDownloadContent(fullHtml, fileName, "text/html;charset=utf-8");
+  if(result === "failed"){
+    alert("iPhone не разрешил сохранить файл. Попробуйте открыть страницу в Safari и нажать кнопку ещё раз.");
+  }else if(result !== "cancelled"){
+    confirmDone(isAppleMobile() ? "В меню iPhone выберите «Сохранить в Файлы»." : "Приложение сохранено: " + fileName);
+  }
 }
 
 </script>
